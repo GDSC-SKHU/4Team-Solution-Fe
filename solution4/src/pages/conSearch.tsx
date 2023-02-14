@@ -117,3 +117,4 @@ const Day = styled.div`
 
 const License = styled.div`
   padding-top: 0.5rem;
+`;
