@@ -86,8 +86,8 @@ export default function App({ Component, pageProps }: AppProps) {
           </div>
         </nav>
         <nav>
-          <LoginBox>로그인</LoginBox>
-          <LoginBox>회원가입</LoginBox>
+          <LoginBox><Link href="/login">로그인</Link></LoginBox>
+          <LoginBox><Link href="/signup">회원가입</Link></LoginBox>
         </nav>
       </Headerbox>
       <Component {...pageProps} />
