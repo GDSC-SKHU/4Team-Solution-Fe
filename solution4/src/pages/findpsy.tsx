@@ -1,120 +1,64 @@
-import List from "@/components/Consultant";
+import Image from "next/image";
 import styled from "styled-components";
+import styles from "@/styles/Find.module.css";
+import { FaStar } from "react-icons/fa";
 
+interface Consultant{
+  name:string;
+  review:string;
+  score:number;
+  intro:string;
+  
+}
 export default function Findpsy() {
   return (
-    <Container>
-      <Condition>
-        <Search placeholder="상담사 이름 검색"></Search>
-        <Location>
-          지역
-          <br />
-          <SelectBox>
-            <option>지역</option>
-            <option>서울</option>
-            <option>인천</option>
-            <option>경기도</option>
-          </SelectBox>
-        </Location>
-        <DetailBox>
-          <Sex>
-            성별
-            <br />
-            <label htmlFor="term">남자 </label>
-            <input type="radio"></input>
-            <label htmlFor="term"> 여자 </label>
-            <input type="radio"></input>
-          </Sex>
-          <Day>요일 선택</Day>
-          <label htmlFor="term">월 </label>
-          <input type="radio"></input>
-          <label htmlFor="term"> 화 </label>
-          <input type="radio"></input>
-          <label htmlFor="term"> 수 </label>
-          <input type="radio"></input>
-          <label htmlFor="term"> 목 </label>
-          <input type="radio"></input>
-          <label htmlFor="term"> 금</label>
-          <input type="radio"></input>
-          <br />
-          <label htmlFor="term">토 </label>
-          <input type="radio"></input>
-          <label htmlFor="term"> 일 </label>
-          <input type="radio"></input>
-          <License>자격증</License>
-          <label htmlFor="term">2급 </label>
-          <input type="radio"></input>
-          <label htmlFor="term"> 1급 </label>
-          <input type="radio"></input>
-        </DetailBox>
-      </Condition>
-      <List></List>
-      <div></div>
-    </Container>
+    <>
+      <ProfileBox>
+        <div>
+          <Image
+            className={styles.profile}
+            src="/고먐미.jpeg"
+            alt="Picture of the author"
+            width={100}
+            height={100}
+          />{" "}
+        </div>
+        <ProfileTextBox>
+          <div>고먐미 심리 상담사</div>
+          <StarBox>
+            <div>후기</div>
+            {/* 이부분 api통해서 후기별로 별 퍼센트 조절하는거 해야됨
+            https://jae04099.tistory.com/entry/React-svg%EB%A1%9C-%EB%B9%84%EC%9C%A8-%EC%A0%95%ED%99%95%ED%95%9C-%EB%B3%84%EC%A0%90-%EA%B5%AC%ED%98%84 */}
+            <Stars>
+              {Array.from({ length: 5 }, (__, i) => (
+                <div key={i}>
+                  <FaStar />
+                </div>
+              ))}
+            </Stars>
+            {/* 숫자 부분 처리 하는 방법 => 별 퍼센트별로 4점, 4.5점 써야됨 */}
+            <div>5점</div>
+          </StarBox>
+          <div>고양이 심리 치료사 고먐미 상담사 입니다</div>
+        </ProfileTextBox>
+      </ProfileBox>
+    </>
   );
 }
 
-const Container = styled.div`
-  margin-top: 6rem;
-
+const ProfileBox = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background-color: pink;
-
-  gap: 5rem;
 `;
-
-const Condition = styled.div`
+const ProfileTextBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  background-color: yellow;
-
-  width: 14rem;
-  height: 25rem;
 `;
-
-const Search = styled.input`
-  background-color: green;
-  width: 12rem;
-  height: 3rem;
-
-  border: solid 1px yellow;
+const Stars = styled.div`
+  display: flex;
+  color: #ffa352;
 `;
-
-const Location = styled.div`
-  padding: 0.5rem;
-  background-color: green;
-  width: 11rem;
-  height: 4rem;
-
-  border: solid 1px yellow;
-`;
-
-const SelectBox = styled.select`
-  background-color: beige;
-
-  width: 10rem;
-  height: 2rem;
-`;
-const DetailBox = styled.div`
-  padding: 0.5rem;
-  background-color: green;
-  width: 11rem;
-  height: 14rem;
-  border: solid 1px yellow;
-`;
-
-const Sex = styled.div``;
-
-const Day = styled.div`
-  padding-top: 0.5rem;
-`;
-
-const License = styled.div`
-  padding-top: 0.5rem;
+const StarBox = styled.div`
+  display: flex;
+  gap: 0.5rem;
+>>>>>>> Stashed changes
 `;
