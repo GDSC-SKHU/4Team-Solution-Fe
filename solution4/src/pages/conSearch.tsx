@@ -17,34 +17,20 @@ export default function Findpsy() {
           </SelectBox>
         </Location>
         <DetailBox>
-          <Sex>
+          <Gender>
             성별
             <br />
             <label htmlFor="term">남자 </label>
             <input type="radio"></input>
             <label htmlFor="term"> 여자 </label>
             <input type="radio"></input>
-          </Sex>
-          <Day>요일 선택</Day>
-          <label htmlFor="term">월 </label>
+          </Gender>
+          <Day>분야</Day>
+          <label htmlFor="term">학생 </label>
           <input type="radio"></input>
-          <label htmlFor="term"> 화 </label>
+          <label htmlFor="term"> 청년 </label>
           <input type="radio"></input>
-          <label htmlFor="term"> 수 </label>
-          <input type="radio"></input>
-          <label htmlFor="term"> 목 </label>
-          <input type="radio"></input>
-          <label htmlFor="term"> 금</label>
-          <input type="radio"></input>
-          <br />
-          <label htmlFor="term">토 </label>
-          <input type="radio"></input>
-          <label htmlFor="term"> 일 </label>
-          <input type="radio"></input>
-          <License>자격증</License>
-          <label htmlFor="term">2급 </label>
-          <input type="radio"></input>
-          <label htmlFor="term"> 1급 </label>
+          <label htmlFor="term"> 노인 </label>
           <input type="radio"></input>
         </DetailBox>
       </Condition>
@@ -56,65 +42,69 @@ export default function Findpsy() {
 
 const Container = styled.div`
   margin-top: 6rem;
+  margin-bottom: 2rem;
 
   display: flex;
   justify-content: center;
-  align-items: center;
-
-  background-color: pink;
-
-  gap: 5rem;
 `;
 
-const Condition = styled.div`
+const Condition = styled.aside`
+  margin-right: 5rem;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  background-color: yellow;
+  background-color: #ccff99a0;
 
   width: 14rem;
-  height: 25rem;
+  height: 27rem;
 `;
 
 const Search = styled.input`
-  background-color: green;
+  margin-bottom: 1rem;
+
+  background-color: white;
+
   width: 12rem;
   height: 3rem;
 
-  border: solid 1px yellow;
+  border: solid 1px gray;
 `;
 
 const Location = styled.div`
+  margin-bottom: 1rem;
   padding: 0.5rem;
-  background-color: green;
+
+  background-color: white;
+
   width: 11rem;
   height: 4rem;
 
-  border: solid 1px yellow;
+  border: solid 1px gray;
 `;
 
 const SelectBox = styled.select`
-  background-color: beige;
-
+  background-color: white;
   width: 10rem;
   height: 2rem;
 `;
 const DetailBox = styled.div`
   padding: 0.5rem;
-  background-color: green;
+
+  background-color: white;
+
   width: 11rem;
   height: 14rem;
-  border: solid 1px yellow;
+  border: solid 1px gray;
 `;
 
-const Sex = styled.div``;
+const Gender = styled.div`
+  background-color: white;
+`;
 
 const Day = styled.div`
   padding-top: 0.5rem;
-`;
-
-const License = styled.div`
-  padding-top: 0.5rem;
+  background-color: white;
 `;

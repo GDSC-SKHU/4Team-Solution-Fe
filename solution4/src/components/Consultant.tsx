@@ -18,8 +18,6 @@ const consultant: IConsultant[] = [
 function List() {
   return (
     <ConsultantBox>
-      {/* <ul>
-        <li> */}
       {consultant.map((each, index) => {
         return (
           <Consultant key={index}>
@@ -32,74 +30,67 @@ function List() {
                   <StyledSpan>{each.name}</StyledSpan>
                   <p>평점</p>
                   <p>키워드</p>
+                  <StyledP>{each.introduce}</StyledP>
                 </Styledinformation>
               </StyledGrid>
-              <StyledIntroduceWrap>
-                <StyledP>{each.introduce}</StyledP>
-              </StyledIntroduceWrap>
             </Link>
           </Consultant>
         );
       })}
-      {/* </li>
-      </ul> */}
     </ConsultantBox>
   );
 }
 
 export default List;
 
-const ConsultantBox = styled.ul`
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+const ConsultantBox = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+
   gap: 2rem;
 
-  background-color: orangered;
-
-  width: 50rem;
+  width: 44rem;
   height: 100%;
 `;
 
-const Consultant = styled.li`
+const Consultant = styled.div`
   padding: 2rem;
-  width: 20rem;
+  width: 40rem;
   height: 10rem;
+  
 
-  background-color: green;
+  border: solid 1px gray;
+
+  border-radius: 5px;
 `;
 
 const StyledGrid = styled.div`
   display: grid;
-  grid-template-columns: 5rem 15rem;
-  grid-template-rows: 5rem;
+  grid-template-columns: 10rem 30rem;
+  grid-template-rows: 10rem;
 `;
 
 const StyledImgWrap = styled.div`
-  width: 5rem;
-  height: 5rem;
+  width: 10rem;
+  height: 10rem;
 `;
 
 const StyledImg = styled.img`
-  width: 5rem;
-  height: 5rem;
+  width: 10rem;
+  height: 10rem;
+
+  border-radius: 50%;
 `;
+
 const Styledinformation = styled.div`
   padding-left: 2rem;
   width: 10rem;
   height: 5rem;
 `;
-const StyledIntroduceWrap = styled.div`
-  padding-top: 2rem;
-  width: 20rem;
-  height: 5rem;
-`;
 
 const StyledSpan = styled.span`
-  font-size: 20px;
-  color: white;
+  font-size: 2.5rem;
+  color: gray;
 `;
 
 const StyledP = styled.p`
