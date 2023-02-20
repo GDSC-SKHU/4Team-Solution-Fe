@@ -34,7 +34,7 @@ export default function SignupC() {
   const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const CouselorData = {
+    const CounselorData = {
       id: counselorid,
       // password: counselorpassword,
       // name: counselorname,
@@ -44,10 +44,7 @@ export default function SignupC() {
 
     axios
       .post("https://mintalk.duckdns.org/counselors", {
-        headers: {
-          "Content-type": "application/json",
-        },
-        CouselorData,
+        CounselorData,
       })
       .then((response) => {
         console.log(response.data);
@@ -72,7 +69,7 @@ export default function SignupC() {
         <InformationDetailBox>
           <StyledP>비밀번호</StyledP>
           <StyledInput
-            type="text"
+            type="password"
             value={counselorpassword}
             onChange={onChangeCPassword}
           ></StyledInput>
