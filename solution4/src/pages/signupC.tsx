@@ -1,32 +1,107 @@
+import { useRouter } from "next/router";
+import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
-
+import axios from "axios";
 //상담사회원가입 페이지
 export default function SignupC() {
+  const router = useRouter();
+
+  const [counselorid, setCounselorid] = useState<string>("");
+
+  const [counselorpassword, setCounselorpassword] = useState<string>("");
+
+  const [counselorname, setCounselorname] = useState<string>("");
+
+  const [counseloremail, setCounseloremail] = useState<string>("");
+
+  const [conuselorgender, setCounselorgender] = useState<string>("");
+
+  const onChangeCId = (e: ChangeEvent<HTMLInputElement>) =>
+    setCounselorid(e.target.value);
+
+  const onChangeCPassword = (e: ChangeEvent<HTMLInputElement>) =>
+    setCounselorpassword(e.target.value);
+
+  const onChangeCName = (e: ChangeEvent<HTMLInputElement>) =>
+    setCounselorname(e.target.value);
+
+  const onChangeCEmail = (e: ChangeEvent<HTMLInputElement>) =>
+    setCounseloremail(e.target.value);
+
+  const onChangeCGender = (e: ChangeEvent<HTMLInputElement>) =>
+    setCounselorgender(e.target.value);
+
+  const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const CouselorData = {
+      id: counselorid,
+      // password: counselorpassword,
+      // name: counselorname,
+      // gender: conuselorgender,
+      // email: counseloremail,
+    };
+
+    axios
+      .post("https://mintalk.duckdns.org/counselors", {
+        headers: {
+          "Content-type": "application/json",
+        },
+        CouselorData,
+      })
+      .then((response) => {
+        console.log(response.data);
+        router.push("/login");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <Container>
       <Title>상담사 회원가입</Title>
-      <Information>
+      <Information onSubmit={onSubmit}>
         <InformationDetailBox>
           <StyledP>ID</StyledP>
-          <StyledInput></StyledInput>
+          <StyledInput
+            type="text"
+            value={counselorid}
+            onChange={onChangeCId}
+          ></StyledInput>
         </InformationDetailBox>
         <InformationDetailBox>
           <StyledP>비밀번호</StyledP>
-          <StyledInput></StyledInput>
+          <StyledInput
+            type="text"
+            value={counselorpassword}
+            onChange={onChangeCPassword}
+          ></StyledInput>
         </InformationDetailBox>
         <InformationDetailBox>
           <StyledP>이름</StyledP>
-          <StyledInput></StyledInput>
+          <StyledInput
+            type="text"
+            value={counselorname}
+            onChange={onChangeCName}
+          ></StyledInput>
         </InformationDetailBox>
         <InformationDetailBox>
           <StyledP>이메일</StyledP>
-          <StyledInput></StyledInput>
+          <StyledInput
+            type="text"
+            value={counseloremail}
+            onChange={onChangeCEmail}
+          ></StyledInput>
         </InformationDetailBox>
         <InformationDetailBox>
           <StyledP>성별</StyledP>
-          <StyledInput></StyledInput>
+          <StyledInput
+            type="text"
+            value={conuselorgender}
+            onChange={onChangeCGender}
+          ></StyledInput>
         </InformationDetailBox>
-        <Summit>상담사 회원가입</Summit>
+        <Summit type="submit">상담사 회원가입</Summit>
       </Information>
     </Container>
   );
@@ -78,7 +153,7 @@ const StyledInput = styled.input`
 
   width: 11rem;
   height: 2rem;
- 
+
   border: solid 1px #c0b3b3;
   border-radius: 5px;
 `;
@@ -88,7 +163,7 @@ const StyledP = styled.p`
   font-weight: 800;
 `;
 
-const Summit = styled.div`
+const Summit = styled.button`
   padding-top: 0.3rem;
   margin-left: 60rem;
   width: 8rem;
