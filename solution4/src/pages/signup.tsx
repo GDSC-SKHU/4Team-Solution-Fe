@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function signup() {
   return (
     <Container>
-      <p>회원 가입</p>
+      <Title>회원 가입</Title>
       <Signup>
         <StyledDiv>일반 회원</StyledDiv>
         <StyledDiv>
@@ -23,16 +23,33 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
+const Title = styled.p`
+  font-size: 2em;
+  font-weight: 900;
+  color: orange;
+`;
+
 const Signup = styled.div`
   margin-top: 5rem;
 
   display: flex;
 
-  gap: 1rem;
+  gap: 3rem;
 `;
 
 const StyledDiv = styled.div`
-  background-color: #ccff99a0;
+  padding-top: 2rem;
+
   width: 10rem;
-  height: 8rem;
+  height: 6rem;
+
+  background-color: #ccff99a0;
+  color: orange;
+
+  border: 3px solid pink;
+  border-radius: 25%;
+
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 800;
 `;
