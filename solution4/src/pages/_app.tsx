@@ -3,153 +3,105 @@ import type { AppProps } from "next/app";
 import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
+import Image from "next/image";
 
 export default function App({ Component, pageProps }: AppProps) {
-  //메뉴 hover 하면 드러나게 하기 위해서
-  const [SearchDoc, setSearchDoc] = useState(true);
-  const [TestList, setTestList] = useState(true);
-  const [Talkground, setTalkground] = useState(true);
   return (
     <>
-      <Headerbox>
-        <nav>
-          <div>
-            <NavTxt
-              onMouseOver={() => {
-                setSearchDoc((prev) => !prev);
-                setTalkground(true);
-                setTestList(true);
-              }}
-            >
-              상담사 찾기
-            </NavTxt>
-            {SearchDoc ? (
-              <></>
-            ) : (
-              <HideList1
-                onMouseLeave={() => {
-                  setSearchDoc((prev) => !prev);
-                }}
-              >
-                <div>
-                  <Link href="/findpsy">
-                    <StyledLink>상담사 보기</StyledLink>
-                  </Link>
-                </div>
-                <div>
-                  <Link href="/HospitalMap">
-                    <StyledLink>병원 모아보기</StyledLink>
-                  </Link>
-                </div>
-              </HideList1>
-            )}
-          </div>
-          <div>
-            <NavTxt
-              onMouseOver={() => {
-                setTestList((prev) => !prev);
-                setTalkground(true);
-                setSearchDoc(true);
-              }}
-            >
-              자가 분석 테스트
-            </NavTxt>
-            {TestList ? (
-              <></>
-            ) : (
-              <HideList1
-                onMouseLeave={() => {
-                  setTestList((prev) => !prev);
-                }}
-              ></HideList1>
-            )}
-          </div>
-          <div>
-            <NavTxt
-              onMouseOver={() => {
-                setTalkground((prev) => !prev);
-                setTestList(true);
-                setSearchDoc(true);
-              }}
-            >
-              소통의 공간
-            </NavTxt>
-            {Talkground ? (
-              <></>
-            ) : (
-              <HideList1
-                onMouseLeave={() => {
-                  setTalkground((prev) => !prev);
-                }}
-              ></HideList1>
-            )}
-          </div>
-        </nav>
-        <nav>
-          <LoginBox><Link href="/login">로그인</Link></LoginBox>
-          <LoginBox><Link href="/signup">회원가입</Link></LoginBox>
-        </nav>
-      </Headerbox>
+      <Head>
+        <Link href="/">
+          <HomeLink>
+            <Image src="/임의로고.png" alt="임의로고" width={180} height={40} />
+          </HomeLink>
+        </Link>
+        <Headerbox>
+          <Menu>
+            <div>
+              <Link href="/findpsy">
+                <NavTxt>상담사 목록</NavTxt>
+              </Link>
+            </div>
+            <div>
+              <Link href="/findpsy">
+                <NavTxt>상담실 위치</NavTxt>
+              </Link>
+            </div>
+            <div>
+              <Link href="/findpsy">
+                <NavTxt>자가 분석 테스트</NavTxt>
+              </Link>
+            </div>
+            <div>
+              <Link href="/findpsy">
+                <NavTxt>소통의 공간</NavTxt>
+              </Link>
+            </div>
+          </Menu>
+          <LoginNav>
+            <div>
+              <Link href="/login">로그인</Link>
+            </div>
+            <div>
+              <Link href="/signup">회원가입</Link>
+            </div>
+          </LoginNav>
+        </Headerbox>
+      </Head>
       <Component {...pageProps} />
     </>
   );
 }
+
+const Head = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 1px solid #d6d6d6;
+`;
+const HomeLink = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  width: max-content;
+  padding-left: 10rem;
+`;
 const Headerbox = styled.div`
-  background-color: #ccff99a0;
   height: 5rem;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  & > nav > div {
+  justify-content: space-between;
+  padding: 0rem 18rem 0rem 3rem;
+
+`;
+const Menu = styled.nav`
+  & > div {
     list-style: none;
     float: left;
     margin: 1rem;
-    font-size: 1.2rem;
-    border-radius: 15px;
-    &:hover {
-      background-color: #91d196;
-    }
+    height: 5rem;
+    display: flex;
+    align-items: center;
   }
 `;
-const HideList1 = styled.div`
-  background-color: #91d196;
-  position: fixed;
-  top: 4rem;
-  text-decoration: none;
-  border-radius: 1rem;
-  padding: 1rem;
-
+const LoginNav = styled.nav`
+  height: 3rem;
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
   & > div {
-    padding: 5px;
-    border-radius: 15px;
+    padding: 10px;
     &:hover {
-      background-color: white;
-      text-decoration: none;
+      color: white;
       transition: all 0.2s;
     }
   }
 `;
+
 const NavTxt = styled.div`
-  height: 2rem;
-  padding: 0.6rem;
+  padding-right: 1rem;
   text-decoration-line: none;
+  border-right: 1px solid #d6d6d6;
   &:hover {
     color: white;
     transition: all 0.2s;
   }
 `;
-const StyledLink = styled.a`
-  text-decoration-line: none;
-`;
-
-const LoginBox = styled.div`
-  padding: 10px;
-  &:hover{
-    color: white;
-    transition: all 0.2s;
-  }
-`
