@@ -1,9 +1,31 @@
+import axios from "axios";
+import router, { useRouter } from "next/router";
+import { FormEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 
 export default function Login() {
+  const router = useRouter();
+
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const onFinish = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetch("https://mintalk.duckdns.org/sign-in/counselor", {
+      method: "POST", // no-cors, *cors, same-origin //메소드 지정
+      // mode: 'no-cors',
+      headers: {
+        //데이터 타입 지정
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({email:username , password})
+      //실제 데이터 파싱하여 body에 저장
+    }).then((res) => console.log(res));
+  };
+
   return (
     <Container>
-      <LoginBox>
+      <LoginBox onSubmit={onFinish}>
         <InputBox>
           <div></div>
           <div>
@@ -14,11 +36,23 @@ export default function Login() {
               <input type="radio" value="counselor"></input>
             </OptionBox>
           </div>
-          <p>ID</p> <IdBox placeholder="ID를 입력하시오."></IdBox>
-          <p>PW</p> <PwBox placeholder="PW를 입력하시오"></PwBox>
+          <p>ID</p>{" "}
+          <IdBox
+            placeholder="ID를 입력하시오."
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          ></IdBox>
+          <p>PW</p>{" "}
+          <PwBox
+            placeholder="PW를 입력하시오"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          ></PwBox>
           <div></div>
           <div>
-            <Submit>로그인하기</Submit>
+            <Submit type="submit">로그인하기</Submit>
           </div>
         </InputBox>
       </LoginBox>

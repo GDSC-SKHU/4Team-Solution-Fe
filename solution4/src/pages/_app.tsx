@@ -56,6 +56,7 @@ const Head = styled.div`
   display: flex;
   justify-content: flex-start;
   border-bottom: 1px solid #d6d6d6;
+  
 `;
 const HomeLink = styled.div`
   display: flex;
