@@ -76,8 +76,10 @@ import {
 export default function Home() {
   // const animatedItem = useScrollFadeIn();
   const [topReviews, setTopReviews] = useState([]);
+  let num = 2;
+
   const postReview = () => {
-    return fetch("https://mintalk.duckdns.org/counselors/2", {
+    return fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
       method: "GET",
       mode: "cors",
       cache: "default",
