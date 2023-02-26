@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { Player } from "@lottiefiles/react-lottie-player";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
-import { BiUserPin } from "react-icons/bi";
+import { FiUser } from "react-icons/fi";
 
 // const useScrollFadeIn = (direction = 'up', duration = 1, delay = 0) => {
 //   const dom = useRef();
@@ -117,13 +117,16 @@ export default function Home() {
             <div>이용자들끼리 고민을 나눌 수 있는 소통의 장을 제공합니다.</div>
           </IntrosubBox>
         </IntroduceBox>
+        <Hr />
         <ServiceBox>
           <span>MinTalk 이용자 후기</span>
           {topReviews.map((reviewlist) => {
             return (
               <>
                 <UserReviewList>
-                  <BiUserPin size={40} />
+                  <div>
+                    <FiUser size={40} />
+                  </div>
                   <ListBox>
                     <p>익명</p>
                     <div>{reviewlist["content"]}</div>
@@ -134,11 +137,24 @@ export default function Home() {
           })}
         </ServiceBox>
       </MainBox>
-      <Footer>개발자 소개</Footer>
+      <Footer>
+        <p>개발자 소개</p>
+        <div>
+          <p>BE. 조성우</p>
+          <p>BE. 임정연</p>
+          <p>FE. 이예슬</p>
+          <p>FE. 백세희</p>
+        </div>
+      </Footer>
     </>
   );
 }
 
+const Hr = styled.div`
+  width: 60%;
+  height: 1px;
+  background-color: #dddddd;
+`;
 const IntrosubBox = styled.div`
   display: flex;
   justify-content: center;
@@ -203,22 +219,38 @@ const UserReviewList = styled.div`
   display: flex;
   width: 50%;
   margin: 2rem auto;
-  align-items: flex-start;
+  align-items: center;
+  & > div {
+    margin: 3px;
+  }
 `;
 
 const Footer = styled.div`
-  background-color: blueviolet;
-  height: 20rem;
+  background-color: #444444;
+  height: max-content;
   width: 100%;
+  color: #eeeeee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0px;
+  & > p {
+    margin: 2rem;
+    font-size: 1.2rem;
+  }
+  &>div{
+    display: flex;
+    gap: 3rem;
+    margin-left: 2rem;
+  }
 `;
 const ServiceBox = styled.div`
-  background-color: blanchedalmond;
   height: max-content;
-  padding: 5rem;
   width: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 3rem;
   & > span {
     font-size: 2rem;
     margin: 3rem;
@@ -228,8 +260,9 @@ const ServiceBox = styled.div`
 const ListBox = styled.div`
   display: flex;
   flex-direction: column;
-  & > p {
+  & > div {
     font-size: 1.4rem;
+    font-weight: 400;
   }
 `;
 
@@ -242,6 +275,9 @@ const IntroduceBox = styled.div`
   flex-direction: column;
   font-size: 2rem;
   font-weight: 400;
+  & > p {
+    margin-bottom: 3rem;
+  }
 `;
 
 const Poster = styled.div`

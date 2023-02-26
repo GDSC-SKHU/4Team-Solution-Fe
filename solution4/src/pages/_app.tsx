@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Headerbox>
           <Menu>
             <div>
-              <Link href="/findpsy">
+              <Link href="/conSearch">
                 <NavTxt>상담사 목록</NavTxt>
               </Link>
             </div>
