@@ -1,4 +1,5 @@
 import axios from "axios";
+import { METHODS } from "http";
 import router, { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 import styled from "styled-components";

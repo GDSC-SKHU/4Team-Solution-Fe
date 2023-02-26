@@ -1,45 +1,162 @@
-import styled, {keyframes} from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Player } from "@lottiefiles/react-lottie-player";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useRef } from "react";
+import { BiUserPin } from "react-icons/bi";
 
-export default function Home(this: any) {
+// const useScrollFadeIn = (direction = 'up', duration = 1, delay = 0) => {
+//   const dom = useRef();
+
+//   const handleDirection = (name:any) => {
+//     switch (name) {
+//       case 'up':
+//         return 'translate3d(0, 50%, 0)';
+//       case 'down':
+//         return 'translate3d(0, -50%, 0)';
+//       case 'left':
+//         return 'translate3d(50%, 0, 0)';
+//       case 'right':
+//         return 'translate3d(-50%, 0, 0)';
+//       default:
+//         return;
+//     };
+//   };
+//   const handleScroll = useCallback(
+//     ([entry]:any) => {
+//       const { current } = element;
+//       if (entry.isIntersecting) {
+//         current.style.transitionProperty = 'all';
+//         current.style.transitionDuration = `${duration}s`;
+//         current.style.transitionTimingFunction = 'cubic-bezier(0, 0, 0.2, 1)';
+//         current.style.transitionDelay = `${delay}s`;
+//         current.style.opacity = 1;
+//         current.style.transform = 'translate3d(0, 0, 0)';
+//       };
+//     },
+//     [delay, duration],
+//   );
+//   useEffect(() => {
+//     let observer:any;
+//     const { current } = dom;
+
+//     if (current) {
+//       observer = new IntersectionObserver(handleScroll, { threshold: 0.7 });
+//       observer.observe(current);
+//     }
+
+//     return () => observer && observer.disconnect();
+//   }, [handleScroll]);
+
+//   return {
+//     ref: dom,
+//     style: {
+//       opacity: 0,
+//       transform: handleDirection(direction),
+//     },
+//   };
+// };
+import {
+  ScrollContainer,
+  ScrollPage,
+  batch,
+  Fade,
+  FadeIn,
+  FadeOut,
+  Move,
+  MoveIn,
+  MoveOut,
+  Sticky,
+  StickyIn,
+  StickyOut,
+  Zoom,
+  ZoomIn,
+  ZoomOut,
+} from "react-scroll-motion";
+
+export default function Home() {
+  // const animatedItem = useScrollFadeIn();
+  const [topReviews, setTopReviews] = useState([]);
+  const postReview = () => {
+    return fetch("https://mintalk.duckdns.org/counselors/2", {
+      method: "GET",
+      mode: "cors",
+      cache: "default",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        return res.data;
+      });
+  };
+  useEffect(() => {
+    postReview().then((res) => setTopReviews(res.reviews.slice(0, 4)));
+  }, []);
+
+  console.log(topReviews);
+
+  // console.log('?',topReviews);
+  //! 이게 6번이나 찍히는 이유는 랜더링을 할때마다 실행하기 때문인데 이 횟수가 많아질 수록 불리하다.
+  // 랜더링 횟수를 줄이는 방법은 상태 변경 등의 사항을 줄이는 것.
+
   return (
     <>
       <MainBox>
         <ServicePosterBox>
           <Poster>
             <PostTextBox>
-            <span>from minTalk</span>
-            <p>내 스트레스... 정말 괜찮은 걸까?</p>
+              <span>from minTalk</span>
+              <p>나의 스트레스... 정말 괜찮은 걸까?</p>
             </PostTextBox>
             <TestBtn>지금 테스트 하러 가기</TestBtn>
-            {/* <Player
-              autoplay
-              loop
-              src="https://assets6.lottiefiles.com/packages/lf20_YH7zo3.json"
-              style={{ height: "100px", width: "100px" }}
-            ></Player> */}
           </Poster>
         </ServicePosterBox>
-        <IntroduceBox>mimTalk 이란?</IntroduceBox>
-        <ServiceBox>service 후기</ServiceBox>
+        <IntroduceBox>
+          <p>MinTalk의 service를 소개합니다</p>
+          <IntrosubBox>
+            <div>상담사와의 실시간 채팅을 지원합니다</div>
+            <div>심리테스트를 지원합니다.</div>
+            <div>이용자들끼리 고민을 나눌 수 있는 소통의 장을 제공합니다.</div>
+          </IntrosubBox>
+        </IntroduceBox>
+        <ServiceBox>
+          <span>MinTalk 이용자 후기</span>
+          {topReviews.map((reviewlist) => {
+            return (
+              <>
+                <UserReviewList>
+                  <BiUserPin size={40} />
+                  <ListBox>
+                    <p>익명</p>
+                    <div>{reviewlist["content"]}</div>
+                  </ListBox>
+                </UserReviewList>
+              </>
+            );
+          })}
+        </ServiceBox>
       </MainBox>
       <Footer>개발자 소개</Footer>
     </>
   );
 }
 
-const slidein = keyframes`
-  from {
-    margin-left: 100%;
-    width: 300%
+const IntrosubBox = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+  gap: 1rem;
+  & > div {
+    width: 20rem;
+    height: 13rem;
+    border-radius: 15px;
+    background-color: #4bff0063;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
+`;
 
-  to {
-    margin-left: 0%;
-    width: 100%;
-  }
-`
 const fade = keyframes`
   from {
     opacity: 0%;
@@ -48,27 +165,22 @@ const fade = keyframes`
   to {
     opacity: 100%;
   }
-`
+`;
 const PostTextBox = styled.div`
-  animation: ${slidein};
-  animation-duration: 2.5s;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 2rem;
-  &>p{
+  & > p {
     font-size: 3rem;
     font-weight: 600;
-    text-shadow: #5eff00 1px 0 6px;
   }
-  &>span{
+  & > span {
     font-size: 1rem;
     font-weight: 600;
-    text-shadow: #5eff00 1px 0 6px;
   }
-
-`
+`;
 const TestBtn = styled.button`
   width: 16rem;
   padding: 5px;
@@ -80,12 +192,20 @@ const TestBtn = styled.button`
   animation: ${fade};
   animation-duration: 3s;
   box-shadow: 0px 0px 7px #48c400;
-  &:hover{
+  &:hover {
     box-shadow: 0px 0px 0px #48c400;
+    background-color: #348e00;
     transition: all 0.2s;
-    
   }
-`
+`;
+
+const UserReviewList = styled.div`
+  display: flex;
+  width: 50%;
+  margin: 2rem auto;
+  align-items: flex-start;
+`;
+
 const Footer = styled.div`
   background-color: blueviolet;
   height: 20rem;
@@ -93,13 +213,35 @@ const Footer = styled.div`
 `;
 const ServiceBox = styled.div`
   background-color: blanchedalmond;
-  height: 40rem;
-  width: 100%;
+  height: max-content;
+  padding: 5rem;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & > span {
+    font-size: 2rem;
+    margin: 3rem;
+  }
 `;
+
+const ListBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  & > p {
+    font-size: 1.4rem;
+  }
+`;
+
 const IntroduceBox = styled.div`
-  background-color: beige;
-  height: 40rem;
-  width: 100%;
+  height: 30rem;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 2rem;
+  font-weight: 400;
 `;
 
 const Poster = styled.div`
@@ -120,7 +262,6 @@ const ServicePosterBox = styled.div`
   height: 40rem;
   animation: ${fade};
   animation-duration: 2.5s;
-  margin: auto;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -129,8 +270,5 @@ const MainBox = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  
+  align-items: center;
 `;
-function props(props: any) {
-  throw new Error("Function not implemented.");
-}
