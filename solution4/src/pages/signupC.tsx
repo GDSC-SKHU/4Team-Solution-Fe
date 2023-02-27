@@ -2,44 +2,35 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-//상담사회원가입 페이지
+
 export default function SignupC() {
   const router = useRouter();
 
-  const [counselorid, setCounselorid] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const [counselorpassword, setCounselorpassword] = useState<string>("");
+  const onChangeName = (e: ChangeEvent<HTMLInputElement>) =>
+    setName(e.target.value);
 
-  const [counselorname, setCounselorname] = useState<string>("");
+  const onChangeGender = (e: ChangeEvent<HTMLInputElement>) =>
+    setGender(e.target.value);
 
-  const [counseloremail, setCounseloremail] = useState<string>("");
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) =>
+    setEmail(e.target.value);
 
-  const [conuselorgender, setCounselorgender] = useState<string>("");
-
-  const onChangeCId = (e: ChangeEvent<HTMLInputElement>) =>
-    setCounselorid(e.target.value);
-
-  const onChangeCPassword = (e: ChangeEvent<HTMLInputElement>) =>
-    setCounselorpassword(e.target.value);
-
-  const onChangeCName = (e: ChangeEvent<HTMLInputElement>) =>
-    setCounselorname(e.target.value);
-
-  const onChangeCEmail = (e: ChangeEvent<HTMLInputElement>) =>
-    setCounseloremail(e.target.value);
-
-  const onChangeCGender = (e: ChangeEvent<HTMLInputElement>) =>
-    setCounselorgender(e.target.value);
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) =>
+    setPassword(e.target.value);
 
   const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const CounselorData = {
-      id: counselorid,
-      // password: counselorpassword,
-      // name: counselorname,
-      // gender: conuselorgender,
-      // email: counseloremail,
+      name: name,
+      gender: gender,
+      email: email,
+      password: password,
     };
 
     axios
@@ -59,45 +50,38 @@ export default function SignupC() {
       <Title>상담사 회원가입</Title>
       <Information onSubmit={onSubmit}>
         <InformationDetailBox>
-          <StyledP>ID</StyledP>
-          <StyledInput
-            type="text"
-            value={counselorid}
-            onChange={onChangeCId}
-          ></StyledInput>
-        </InformationDetailBox>
-        <InformationDetailBox>
-          <StyledP>비밀번호</StyledP>
-          <StyledInput
-            type="password"
-            value={counselorpassword}
-            onChange={onChangeCPassword}
-          ></StyledInput>
-        </InformationDetailBox>
-        <InformationDetailBox>
           <StyledP>이름</StyledP>
           <StyledInput
             type="text"
-            value={counselorname}
-            onChange={onChangeCName}
-          ></StyledInput>
-        </InformationDetailBox>
-        <InformationDetailBox>
-          <StyledP>이메일</StyledP>
-          <StyledInput
-            type="text"
-            value={counseloremail}
-            onChange={onChangeCEmail}
+            value={name}
+            onChange={onChangeName}
           ></StyledInput>
         </InformationDetailBox>
         <InformationDetailBox>
           <StyledP>성별</StyledP>
           <StyledInput
             type="text"
-            value={conuselorgender}
-            onChange={onChangeCGender}
+            value={gender}
+            onChange={onChangeGender}
           ></StyledInput>
         </InformationDetailBox>
+        <InformationDetailBox>
+          <StyledP>이메일</StyledP>
+          <StyledInput
+            type="text"
+            value={email}
+            onChange={onChangeEmail}
+          ></StyledInput>
+        </InformationDetailBox>
+        <InformationDetailBox>
+          <StyledP>비밀번호</StyledP>
+          <StyledInput
+            type="password"
+            value={password}
+            onChange={onChangePassword}
+          ></StyledInput>
+        </InformationDetailBox>
+
         <Summit type="submit">상담사 회원가입</Summit>
       </Information>
     </Container>
@@ -126,7 +110,7 @@ const Information = styled.form`
 
   gap: 2rem;
 
-  width: 70rem;
+  width: 55rem;
   height: 30rem;
 
   border: 15%;
@@ -162,7 +146,7 @@ const StyledP = styled.p`
 
 const Summit = styled.button`
   padding-top: 0.3rem;
-  margin-left: 60rem;
+  margin-left: 45rem;
   width: 8rem;
   height: 2rem;
 
