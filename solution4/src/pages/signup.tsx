@@ -6,7 +6,9 @@ export default function signup() {
     <Container>
       <Title>회원 가입</Title>
       <Signup>
-        <StyledDiv>일반 회원</StyledDiv>
+        <StyledDiv>
+          <Link href="singupM">내담자</Link>
+        </StyledDiv>
         <StyledDiv>
           <Link href="signupC">상담사</Link>
         </StyledDiv>
@@ -26,7 +28,6 @@ const Container = styled.div`
 const Title = styled.p`
   font-size: 2em;
   font-weight: 900;
-  color: orange;
 `;
 
 const Signup = styled.div`
@@ -43,11 +44,9 @@ const StyledDiv = styled.div`
   width: 10rem;
   height: 6rem;
 
-  background-color: #ccff99a0;
   color: orange;
 
   border: 3px solid pink;
-  border-radius: 25%;
 
   text-align: center;
   font-size: 2rem;
