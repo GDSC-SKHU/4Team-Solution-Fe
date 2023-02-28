@@ -24,6 +24,8 @@ export default function Findpsy() {
             <input type="radio"></input>
             <label htmlFor="term"> 여자 </label>
             <input type="radio"></input>
+            <label htmlFor="term"> 무관 </label>
+            <input type="radio"></input>
           </Gender>
           <Day>분야</Day>
           <label htmlFor="term">학생 </label>
@@ -32,6 +34,7 @@ export default function Findpsy() {
           <input type="radio"></input>
           <label htmlFor="term"> 노인 </label>
           <input type="radio"></input>
+          <Reset>초기화</Reset>
         </DetailBox>
       </Condition>
       <List></List>
@@ -49,6 +52,10 @@ const Container = styled.div`
 `;
 
 const Condition = styled.aside`
+  position: sticky;
+  top: 150px;
+  left: 150px;
+
   margin-right: 5rem;
 
   display: flex;
@@ -56,10 +63,11 @@ const Condition = styled.aside`
   justify-content: center;
   align-items: center;
 
+  border-radius: 15px;
   background-color: #ccff99a0;
 
   width: 14rem;
-  height: 27rem;
+  height: 23rem;
 `;
 
 const Search = styled.input`
@@ -70,7 +78,10 @@ const Search = styled.input`
   width: 12rem;
   height: 3rem;
 
-  border: solid 1px gray;
+  border: solid 1px green;
+  border-radius: 15px;
+
+  text-align: center;
 `;
 
 const Location = styled.div`
@@ -82,7 +93,8 @@ const Location = styled.div`
   width: 11rem;
   height: 4rem;
 
-  border: solid 1px gray;
+  border: solid 1px green;
+  border-radius: 15px;
 `;
 
 const SelectBox = styled.select`
@@ -96,8 +108,9 @@ const DetailBox = styled.div`
   background-color: white;
 
   width: 11rem;
-  height: 14rem;
-  border: solid 1px gray;
+  height: 9rem;
+  border: solid 1px green;
+  border-radius: 15px;
 `;
 
 const Gender = styled.div`
@@ -107,4 +120,17 @@ const Gender = styled.div`
 const Day = styled.div`
   padding-top: 0.5rem;
   background-color: white;
+`;
+
+const Reset = styled.div`
+  margin-left: 8rem;
+  margin-top: 1rem;
+
+  width: 3rem;
+  height: 1.5rem;
+
+  border: solid 1px green;
+  border-radius: 5px;
+
+  text-align: center;
 `;

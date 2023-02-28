@@ -17,31 +17,39 @@ const consultant: IConsultant[] = [
 
 function List() {
   return (
-    <ConsultantBox>
-      {consultant.map((each, index) => {
-        return (
-          <Consultant key={index}>
-            <Link href={each.href}>
-              <StyledGrid>
-                <StyledImgWrap>
-                  <StyledImg src={each.portrait} alt="상담사 사진" />
-                </StyledImgWrap>
-                <Styledinformation>
-                  <StyledSpan>{each.name}</StyledSpan>
-                  <p>평점</p>
-                  <p>키워드</p>
-                  <StyledP>{each.introduce}</StyledP>
-                </Styledinformation>
-              </StyledGrid>
-            </Link>
-          </Consultant>
-        );
-      })}
-    </ConsultantBox>
+    <Box>
+      <div>소개</div>
+      <div>소개</div>
+      <ConsultantBox>
+        {consultant.map((each, index) => {
+          return (
+            <Consultant key={index}>
+              <Link href={each.href}>
+                <StyledGrid>
+                  <StyledImgWrap>
+                    <StyledImg src={each.portrait} alt="상담사 사진" />
+                  </StyledImgWrap>
+                  <Styledinformation>
+                    <StyledSpan>{each.name}</StyledSpan>
+                    <p>평점</p>
+                    <p>키워드</p>
+                    <StyledP>{each.introduce}</StyledP>
+                  </Styledinformation>
+                </StyledGrid>
+              </Link>
+            </Consultant>
+          );
+        })}
+      </ConsultantBox>
+    </Box>
   );
 }
 
 export default List;
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const ConsultantBox = styled.section`
   display: flex;
@@ -50,46 +58,50 @@ const ConsultantBox = styled.section`
   gap: 2rem;
 
   width: 44rem;
-  height: 100%;
 `;
 
 const Consultant = styled.div`
-  padding: 2rem;
-  width: 40rem;
-  height: 10rem;
-  
+  padding: 1.5rem;
+  width: 25rem;
+  height: 14rem;
 
   border: solid 1px gray;
 
   border-radius: 5px;
+
+  background-color: aliceblue;
 `;
 
 const StyledGrid = styled.div`
   display: grid;
-  grid-template-columns: 10rem 30rem;
-  grid-template-rows: 10rem;
+  grid-template-columns: 8rem 15rem;
+  grid-template-rows: 12rem;
+
+  /* background-color: pink; */
 `;
 
 const StyledImgWrap = styled.div`
-  width: 10rem;
-  height: 10rem;
+  width: 8rem;
+  height: 8rem;
 `;
 
 const StyledImg = styled.img`
-  width: 10rem;
-  height: 10rem;
+  width: 8rem;
+  height: 8rem;
 
   border-radius: 50%;
 `;
 
 const Styledinformation = styled.div`
   padding-left: 2rem;
-  width: 10rem;
-  height: 5rem;
+  width: 12rem;
+  height: 10rem;
+
+  /* background-color: #93daf6; */
 `;
 
 const StyledSpan = styled.span`
-  font-size: 2.5rem;
+  font-size: 2em;
   color: gray;
 `;
 
