@@ -4,57 +4,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
 import { FiUser } from "react-icons/fi";
 
-// const useScrollFadeIn = (direction = 'up', duration = 1, delay = 0) => {
-//   const dom = useRef();
-
-//   const handleDirection = (name:any) => {
-//     switch (name) {
-//       case 'up':
-//         return 'translate3d(0, 50%, 0)';
-//       case 'down':
-//         return 'translate3d(0, -50%, 0)';
-//       case 'left':
-//         return 'translate3d(50%, 0, 0)';
-//       case 'right':
-//         return 'translate3d(-50%, 0, 0)';
-//       default:
-//         return;
-//     };
-//   };
-//   const handleScroll = useCallback(
-//     ([entry]:any) => {
-//       const { current } = element;
-//       if (entry.isIntersecting) {
-//         current.style.transitionProperty = 'all';
-//         current.style.transitionDuration = `${duration}s`;
-//         current.style.transitionTimingFunction = 'cubic-bezier(0, 0, 0.2, 1)';
-//         current.style.transitionDelay = `${delay}s`;
-//         current.style.opacity = 1;
-//         current.style.transform = 'translate3d(0, 0, 0)';
-//       };
-//     },
-//     [delay, duration],
-//   );
-//   useEffect(() => {
-//     let observer:any;
-//     const { current } = dom;
-
-//     if (current) {
-//       observer = new IntersectionObserver(handleScroll, { threshold: 0.7 });
-//       observer.observe(current);
-//     }
-
-//     return () => observer && observer.disconnect();
-//   }, [handleScroll]);
-
-//   return {
-//     ref: dom,
-//     style: {
-//       opacity: 0,
-//       transform: handleDirection(direction),
-//     },
-//   };
-// };
 import {
   ScrollContainer,
   ScrollPage,
@@ -76,7 +25,7 @@ import {
 export default function Home() {
   // const animatedItem = useScrollFadeIn();
   const [topReviews, setTopReviews] = useState([]);
-  let num = 2;
+  let num = 1;
 
   const postReview = () => {
     return fetch(`https://mintalk.duckdns.org/counselors/${num}`, {

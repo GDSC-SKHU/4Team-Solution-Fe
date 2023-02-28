@@ -12,22 +12,22 @@ import { consultantlist, fieldList, careerlist } from "../constants";
 // "222" + a + "222"
 // `222${a}222`
 
-const postReview = ({num}) => {
-  return fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
-    method: "GET",
-    mode: "cors",
-    cache: "default",
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      return res.data;
-    });
-};
-
-export default function Findpsy({id}) {
+export default function Findpsy() {
   const [consultant, setConsultant] = useState([]);
+  const postReview = () => {
+    let num = 2;
+    return fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
+      method: "GET",
+      mode: "cors",
+      cache: "default",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        return res.data;
+      });
+  };
   useEffect(() => {
-    postReview({num: id}).then((res) => setConsultant(res));
+    postReview().then((res) => setConsultant(res));
     //id 을 num으로 받는다. 위에 postReview 선언한 부분에서 num을 받아오는데 그것은 conSearch에서 상담사 box를 클릭했을때 num의 값을 상담사 id로 보내줘야함.
   }, []);
 
