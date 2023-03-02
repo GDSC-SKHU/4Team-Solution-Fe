@@ -40,7 +40,7 @@ export default function Home() {
   };
   useEffect(() => {
     postReview().then((res) => setTopReviews(res.reviews.slice(0, 4)));
-  }, []);
+  }, );
 
   console.log(topReviews);
 
