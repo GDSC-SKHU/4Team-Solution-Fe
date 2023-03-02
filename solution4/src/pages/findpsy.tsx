@@ -3,10 +3,7 @@ import styled from "styled-components";
 import styles from "@/styles/Find.module.css";
 import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { instance } from "../libs/api";
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 import { FaStar, FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import { consultantlist, fieldList, careerlist } from "../constants";
