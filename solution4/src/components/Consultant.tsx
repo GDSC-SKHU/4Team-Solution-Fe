@@ -1,49 +1,68 @@
-import Link from "next/link";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-interface IConsultant {
-  href: string;
-  portrait: string;
+const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  e.preventDefault();
+  // 이걸 눌렀을 때 num을 id랑 같게 만들어줘야함  여기서 id는 (api)consultant에 있는 id를 의미
+};
+
+interface Record {
+  id: number;
   name: string;
-  introduce: string;
+  shortIntroduction: string;
+  location: string;
+  fields: [{ desc: string }];
 }
 
-const consultant: IConsultant[] = [
-  { href: "", portrait: "portrait.png", name: "조성우", introduce: "친절함" },
-  { href: "", portrait: "portrait.png", name: "이예슬", introduce: "집중함" },
-  { href: "", portrait: "portrait.png", name: "임정연", introduce: "고민함" },
-  { href: "", portrait: "portrait.png", name: "백세희", introduce: "좋음좋음" },
-];
+const List = () => {
+  const [data, setData] = useState<Record[]>([]);
 
-function List() {
+  axios
+    .get("https://mintalk.duckdns.org")
+    .then((response) => {
+      setData(response.data.data); //받아온 데이터를 data에 저장
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  // useEffect(() => { }, [setData]);
   return (
     <Box>
-      <div>소개</div>
-      <div>소개</div>
+      {/* {data.map((Record, number) => {
+        return (
+          <div key={number}>
+            <h2>{Record.name}</h2>
+            <div>{Record.shortIntroduction}</div>
+            <div>{Record.location}</div>
+            {Record.fields.map((f, h) => (
+              <div key={h}>{f.desc}</div>
+            ))}
+          </div>
+        );
+      })} */}
+
       <ConsultantBox>
-        {consultant.map((each, index) => {
+        {data.map((Record, number) => {
           return (
-            <Consultant key={index}>
-              <Link href={each.href}>
-                <StyledGrid>
-                  <StyledImgWrap>
-                    <StyledImg src={each.portrait} alt="상담사 사진" />
-                  </StyledImgWrap>
-                  <Styledinformation>
-                    <StyledSpan>{each.name}</StyledSpan>
-                    <p>평점</p>
-                    <p>키워드</p>
-                    <StyledP>{each.introduce}</StyledP>
-                  </Styledinformation>
-                </StyledGrid>
-              </Link>
+            <Consultant key={number} onClick={onClick}>
+              <StyledGrid>
+                <Styledinformation>
+                  <StyledSpan>{Record.name}</StyledSpan>
+                  <p>소개: {Record.shortIntroduction}</p>
+                  <StyledP>{Record.location}</StyledP>
+                  {Record.fields.map((f, h) => (
+                    <div key={h}>{f.desc}</div>
+                  ))}
+                </Styledinformation>
+              </StyledGrid>
             </Consultant>
           );
         })}
       </ConsultantBox>
     </Box>
   );
-}
+};
 
 export default List;
 const Box = styled.div`
@@ -56,16 +75,12 @@ const ConsultantBox = styled.section`
   flex-direction: column;
 
   gap: 2rem;
-
-  width: 44rem;
 `;
 
 const Consultant = styled.div`
   padding: 1.5rem;
   width: 25rem;
   height: 14rem;
-
-  border: solid 1px gray;
 
   border-radius: 5px;
 
@@ -78,18 +93,6 @@ const StyledGrid = styled.div`
   grid-template-rows: 12rem;
 
   /* background-color: pink; */
-`;
-
-const StyledImgWrap = styled.div`
-  width: 8rem;
-  height: 8rem;
-`;
-
-const StyledImg = styled.img`
-  width: 8rem;
-  height: 8rem;
-
-  border-radius: 50%;
 `;
 
 const Styledinformation = styled.div`
