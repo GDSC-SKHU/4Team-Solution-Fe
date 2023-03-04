@@ -1,8 +1,9 @@
-import axios from "axios";
-import { METHODS } from "http";
-import router, { useRouter } from "next/router";
-import { FormEvent, useEffect, useState } from "react";
+// import axios from "axios";
+// import { METHODS } from "http";
+import { useRouter } from "next/router";
+import { FormEvent, useState } from "react";
 import styled from "styled-components";
+// import Checkbox from "./Checkbox";
 
 export default function Login() {
   const router = useRouter();
@@ -10,32 +11,46 @@ export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const data = { email: username, password: password };
   const onFinish = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch("https://mintalk.duckdns.org/sign-in/counselor", {
+    fetch("https://mintalk.duckdns.org/sign-in/counselors", {
       method: "POST", // no-cors, *cors, same-origin //메소드 지정
       // mode: 'no-cors',
       headers: {
         //데이터 타입 지정
-        "Content-Type": "application/json; charset=utf-8",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({email:username , password})
+      body: JSON.stringify(data),
       //실제 데이터 파싱하여 body에 저장
-    }).then((res) => console.log(res));
+      credentials: `include`,
+    })
+      // .then((res) => res.json()) //이것이 필요한 것인가?
+      //
+      // .then((res) => {
+      //   console.log(res);
+      //   router.push("/");
+      // })
+      .then((res) => {
+        res;
+        router.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <Container>
       <LoginBox onSubmit={onFinish}>
         <InputBox>
-          <div></div>
           <div>
-            <OptionBox>
-              <label htmlFor="term">회원 </label>
-              <input type="radio" value="member"></input>
-              <label htmlFor="term"> 상담사 </label>
-              <input type="radio" value="counselor"></input>
-            </OptionBox>
+            <CheckBox color="white" name="white" defaultChecked={false} />
+            <label htmlFor="white">회원 </label>
+          </div>
+          <div>
+            <CheckBox color="white" name="white" defaultChecked={false} />
+            <label htmlFor="white"> 상담사 </label>
           </div>
           <p>ID</p>{" "}
           <IdBox
@@ -91,7 +106,7 @@ const InputBox = styled.div`
   gap: 1rem;
 `;
 
-const OptionBox = styled.div`
+const CheckBox = styled.input`
   float: right;
 `;
 const IdBox = styled.input``;
