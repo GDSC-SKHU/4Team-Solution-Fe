@@ -26,19 +26,18 @@ export default function SignupC() {
   const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const CounselorData = {
-      name: name,
-      gender: gender,
-      email: email,
-      password: password,
-    };
-
     axios
-      .post("https://mintalk.duckdns.org/counselors", {
-        CounselorData,
-      })
+      .post(
+        "https://mintalk.duckdns.org/counselors",
+        { name: name, gender: gender, email: email, password: password },
+        {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        }
+      )
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
         router.push("/login");
       })
       .catch((error) => {
