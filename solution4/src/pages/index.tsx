@@ -25,9 +25,9 @@ import {
 export default function Home() {
   // const animatedItem = useScrollFadeIn();
   const [topReviews, setTopReviews] = useState([]);
-  let num = 1;
 
   const postReview = () => {
+    let num = 1;
     return fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
       method: "GET",
       mode: "cors",
@@ -40,9 +40,7 @@ export default function Home() {
   };
   useEffect(() => {
     postReview().then((res) => setTopReviews(res.reviews.slice(0, 4)));
-  }, );
-
-  console.log(topReviews);
+  });
 
   // console.log('?',topReviews);
   //! 이게 6번이나 찍히는 이유는 랜더링을 할때마다 실행하기 때문인데 이 횟수가 많아질 수록 불리하다.
@@ -55,48 +53,44 @@ export default function Home() {
           <Poster>
             <PostTextBox>
               <span>from minTalk</span>
-              <p>나의 스트레스... 정말 괜찮은 걸까?</p>
+              <p>당신의 스트레스는 괜찮은 상태인가요..?</p>
+              <div>How about measuring your stress?</div>
             </PostTextBox>
             <TestBtn>지금 테스트 하러 가기</TestBtn>
           </Poster>
         </ServicePosterBox>
+        <Hr />
         <IntroduceBox>
           <p>MinTalk의 service를 소개합니다</p>
           <IntrosubBox>
-            <div>상담사와의 실시간 채팅을 지원합니다</div>
+            <div>상담사와 실시간 상담이 가능합니다</div>
             <div>심리테스트를 지원합니다.</div>
-            <div>이용자들끼리 고민을 나눌 수 있는 소통의 장을 제공합니다.</div>
+            <div>소통을 위한 서비스가 제공됩니다.</div>
           </IntrosubBox>
         </IntroduceBox>
         <Hr />
         <ServiceBox>
           <span>MinTalk 이용자 후기</span>
-          {topReviews.map((reviewlist) => {
-            return (
-              <>
-                <UserReviewList>
-                  <div>
-                    <FiUser size={40} />
-                  </div>
-                  <ListBox>
-                    <p>익명</p>
-                    <div>{reviewlist["content"]}</div>
-                  </ListBox>
-                </UserReviewList>
-              </>
-            );
-          })}
+          <div>
+            {topReviews.map((reviewlist) => {
+              return (
+                <>
+                  <UserReviewList>
+                    
+                    <Anony>
+                      <FiUser size={35} />
+                      <p>익명</p>
+                    </Anony>
+                    <ListBox>
+                      <div>{reviewlist["content"]}</div>
+                    </ListBox>
+                  </UserReviewList>
+                </>
+              );
+            })}
+          </div>
         </ServiceBox>
       </MainBox>
-      <Footer>
-        <p>개발자 소개</p>
-        <div>
-          <p>BE. 조성우</p>
-          <p>BE. 임정연</p>
-          <p>FE. 이예슬</p>
-          <p>FE. 백세희</p>
-        </div>
-      </Footer>
     </>
   );
 }
@@ -112,15 +106,26 @@ const IntrosubBox = styled.div`
   margin: 2rem;
   gap: 1rem;
   & > div {
-    width: 20rem;
-    height: 13rem;
+    width: 18rem;
+    height: 8rem;
     border-radius: 15px;
-    background-color: #4bff0063;
-    font-size: 1rem;
+    background-color:#9BD58B;
+    border: 0.1px solid gray;
+    font-size: 1.1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 1rem;
+    margin: 2rem;
+    &:hover {
+      font-size: 1.3rem;
+      width: 20rem;
+      margin-right: 1rem;
+      margin-left: 1rem;
+      background-color: #dcffda;
+      transition: all 0.2s;
+    }
   }
 `;
 
@@ -144,76 +149,87 @@ const PostTextBox = styled.div`
     font-weight: 600;
   }
   & > span {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
+  }
+  & > div {
+    font-size: 2rem;
   }
 `;
 const TestBtn = styled.button`
   width: 16rem;
-  padding: 5px;
+  padding: 10px;
   font-size: 1.3rem;
-  color: white;
-  background-color: #48c400;
-  border-radius: 10px;
+  background-color: #9BD58B;
+  border-radius: 15px;
   outline: none;
   animation: ${fade};
   animation-duration: 3s;
-  box-shadow: 0px 0px 7px #48c400;
   &:hover {
-    box-shadow: 0px 0px 0px #48c400;
-    background-color: #348e00;
+    background-color: #00710d;
     transition: all 0.2s;
   }
 `;
 
-const UserReviewList = styled.div`
-  display: flex;
-  width: 50%;
-  margin: 2rem auto;
-  align-items: center;
-  & > div {
-    margin: 3px;
-  }
-`;
-
-const Footer = styled.div`
-  background-color: #444444;
-  height: max-content;
-  width: 100%;
-  color: #eeeeee;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem 0px;
-  & > p {
-    margin: 2rem;
-    font-size: 1.2rem;
-  }
-  &>div{
-    display: flex;
-    gap: 3rem;
-    margin-left: 2rem;
-  }
-`;
 const ServiceBox = styled.div`
   height: max-content;
-  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 3rem;
+  width: 60%;
   & > span {
     font-size: 2rem;
     margin: 3rem;
   }
+  & > div {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 `;
-
-const ListBox = styled.div`
+const UserReviewList = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border: 0.1px solid gray;
+  border-radius: 20px;
+  width: 16rem;
+  height: 14rem;
+  background-color: #e8ffe2;
+  padding: 1rem;
+  &:hover{
+    width: 17rem;
+    height: 15rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: #2ecf347a;
+    transition: all 1s;
+    &>span{
+      background-color: #e8ffe2;
+      transition: all 1s;
+    }
+  }
+`;
+const Anony = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  font-size: 1.4rem;
+`;
+const ListBox = styled.span`
+  display: flex;
+  margin: 2rem 1rem;
+  width: 90%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #2ecf347a;
+  border-radius: 10px;
   & > div {
-    font-size: 1.4rem;
-    font-weight: 400;
+    font-size: 1.2rem;
   }
 `;
 
@@ -228,29 +244,31 @@ const IntroduceBox = styled.div`
   font-weight: 400;
   & > p {
     margin-bottom: 3rem;
+    height: 1rem;
   }
 `;
 
 const Poster = styled.div`
-  width: 60%;
+  width: 100%;
   margin: auto;
-  height: 16rem;
+  height: 45rem;
   display: flex;
   color: white;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-const ServicePosterBox = styled.div`
   background-image: url("/stressguy.jpeg");
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
-  height: 40rem;
+`;
+const ServicePosterBox = styled.div`
+  height: 45rem;
   animation: ${fade};
   animation-duration: 2.5s;
   width: 100%;
   display: flex;
+  margin-bottom: 3rem;
   justify-content: center;
 `;
 const MainBox = styled.div`
@@ -258,4 +276,5 @@ const MainBox = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background-color: #fffff3;
 `;

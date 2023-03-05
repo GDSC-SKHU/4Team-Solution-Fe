@@ -11,38 +11,30 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <Link href="/">
           <HomeLink>
-            <Image src="/임의로고.png" alt="임의로고" width={180} height={40} />
+            <Image src="/minTalk.png" alt="logo" width={100} height={30} />
           </HomeLink>
         </Link>
         <Headerbox>
           <Menu>
             <div>
-              <Link href="/conSearch">
-                <NavTxt>상담사 목록</NavTxt>
-              </Link>
+              <NavTxt href="/conSearch">상담 찾기</NavTxt>
             </div>
             <div>
-              <Link href="/findpsy">
-                <NavTxt>상담실 위치</NavTxt>
-              </Link>
+              <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>
             </div>
             <div>
-              <Link href="/findpsy">
-                <NavTxt>자가 분석 테스트</NavTxt>
-              </Link>
+              <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>
             </div>
             <div>
-              <Link href="/findpsy">
-                <NavTxt>소통의 공간</NavTxt>
-              </Link>
+              <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>
             </div>
           </Menu>
           <LoginNav>
             <div>
-              <Link href="/login">로그인</Link>
+              <NavTxt href="/login">로그인</NavTxt>
             </div>
             <div>
-              <Link href="/signup">회원가입</Link>
+              <NavTxt href="/signup">회원가입</NavTxt>
             </div>
           </LoginNav>
         </Headerbox>
@@ -55,8 +47,9 @@ export default function App({ Component, pageProps }: AppProps) {
 const Head = styled.div`
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   border-bottom: 1px solid #d6d6d6;
-  
+  font-size: 1.2rem;
 `;
 const HomeLink = styled.div`
   display: flex;
@@ -67,42 +60,39 @@ const HomeLink = styled.div`
   padding-left: 10rem;
 `;
 const Headerbox = styled.div`
-  height: 5rem;
+  height: 7rem;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0rem 18rem 0rem 3rem;
-
 `;
 const Menu = styled.nav`
   & > div {
     list-style: none;
     float: left;
     margin: 1rem;
-    height: 5rem;
+    height: 2rem;
     display: flex;
     align-items: center;
+    border-right: 1px solid #d6d6d6;
   }
 `;
 const LoginNav = styled.nav`
   height: 3rem;
   display: flex;
-  & > div {
-    padding: 10px;
-    &:hover {
-      color: white;
-      transition: all 0.2s;
-    }
-  }
+  align-items: center;
+  transition: all 0.2s;
 `;
 
-const NavTxt = styled.div`
-  padding-right: 1rem;
+const NavTxt = styled(Link)`
+  padding: 5px;
+  margin: 10px;
   text-decoration-line: none;
-  border-right: 1px solid #d6d6d6;
+  color: black;
   &:hover {
-    color: white;
+    border-bottom: 3px solid green;
+    color: #0b1d00d0;
     transition: all 0.2s;
   }
 `;
