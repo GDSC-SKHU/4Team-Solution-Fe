@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Link from "next/link";
-import { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 
@@ -23,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>
             </div>
             <div>
-              <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>
+              <NavTxt href="/clientsConsultantPage">상담실 위치</NavTxt>
             </div>
             <div>
               <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>

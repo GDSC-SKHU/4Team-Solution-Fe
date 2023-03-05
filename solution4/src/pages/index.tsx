@@ -75,8 +75,7 @@ export default function Home() {
             {topReviews.map((reviewlist) => {
               return (
                 <>
-                  <UserReviewList>
-                    
+                  <UserReviewList key={reviewlist["rate"]}>
                     <Anony>
                       <FiUser size={35} />
                       <p>익명</p>
@@ -109,7 +108,7 @@ const IntrosubBox = styled.div`
     width: 18rem;
     height: 8rem;
     border-radius: 15px;
-    background-color:#9BD58B;
+    background-color: #9bd58b;
     border: 0.1px solid gray;
     font-size: 1.1rem;
     display: flex;
@@ -160,7 +159,7 @@ const TestBtn = styled.button`
   width: 16rem;
   padding: 10px;
   font-size: 1.3rem;
-  background-color: #9BD58B;
+  background-color: #9bd58b;
   border-radius: 15px;
   outline: none;
   animation: ${fade};
@@ -200,15 +199,14 @@ const UserReviewList = styled.div`
   width: 16rem;
   height: 14rem;
   background-color: #e8ffe2;
-  padding: 1rem;
-  &:hover{
+  margin: 1rem;
+  &:hover {
     width: 17rem;
     height: 15rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    margin: 0.5rem;
     background-color: #2ecf347a;
     transition: all 1s;
-    &>span{
+    & > span {
       background-color: #e8ffe2;
       transition: all 1s;
     }
