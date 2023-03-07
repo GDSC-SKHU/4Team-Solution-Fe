@@ -1,46 +1,17 @@
 import Image from "next/image";
 import styled from "styled-components";
 import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { FaStar, FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
-import { fieldList, careerlist } from "../constants";
+import Googlemaps from "@/components/Googlemaps";
 
-const containerStyle = {
-  width: "800px",
-  height: "500px",
-};
-
-const center = {
-  lat: 37.501834,
-  lng: 127.036068,
-};
-
-export default function ClientsConsultantPage() {
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "AIzaSyDbRsFZxbeWSiSTVJtpbXvC4SgkbDcgR5k",
-  });
-
-  const [map, setMap] = React.useState(null);
-
-  const onLoad = React.useCallback(function callback(map: any) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-
-    setMap(map);
-  }, []);
-
-  const onUnmount = React.useCallback(function callback(map: any) {
-    setMap(null);
-  }, []);
-
+export default function ClientsConsultantPage({}) {
   const [consultant, setConsultant] = useState<any>({});
   const [consultantReivews, setConsultantReivews] = useState("");
   const [rate, setRate] = useState("");
   const [career, setCareer] = useState([]);
   const [fields, setFields] = useState([]);
+  const [location, setLocation] = useState('');
 
   //!상담사용 자기소개 조회
   const consultantsPage = () => {
@@ -76,7 +47,8 @@ export default function ClientsConsultantPage() {
             setConsultantReivews(res.data.reviews[0].content),
             setRate(res.data.reviews[0].rate),
             setCareer(res.data.careers),
-            setFields(res.data.fields)
+            setFields(res.data.fields),
+            setLocation(res.data.location)
           );
         });
       });
@@ -150,40 +122,31 @@ export default function ClientsConsultantPage() {
             <CareerTotalBox>
               <FieldBox>
                 <CareerBoxHeader># 학력 및 경력</CareerBoxHeader>
-                  {career.map((careerlist) => {
-                    return (
-                      <>
-                        <div key={consultant?.id}>{careerlist}</div>
-                      </>
-                    );
-                  })}
+                {career.map((careerlist) => {
+                  return (
+                    <>
+                      <div key={consultant?.id}>{careerlist}</div>
+                    </>
+                  );
+                })}
               </FieldBox>
               <FieldBox>
                 <CareerBoxHeader># 전문 분야</CareerBoxHeader>
-                  {fields.map(({ desc }) => {
-                    return (
-                      <>
-                        <div key={desc}>{desc}</div>
-                      </>
-                    );
-                  })}
+                {fields.map(({ desc }) => {
+                  return (
+                    <>
+                      <div key={desc}>{desc}</div>
+                    </>
+                  );
+                })}
               </FieldBox>
             </CareerTotalBox>
             <HrLine />
             <HospitalBox>
               <CareerBoxHeader># 병원 위치</CareerBoxHeader>
+              <span>{location}</span>
               <HospitalImage>
-                {isLoaded ? (
-                  <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    center={center}
-                    zoom={10}
-                    onLoad={onLoad}
-                    onUnmount={onUnmount}
-                  ></GoogleMap>
-                ) : (
-                  <></>
-                )}
+                <Googlemaps />
               </HospitalImage>
             </HospitalBox>
             <HrLine />
@@ -257,9 +220,15 @@ const HospitalBox = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  &>span{
+    margin-top: 3rem;
+    font-size: 1.1rem;
+  }
 `;
 const HospitalImage = styled.div`
-  margin: 4rem;
+  margin: 3rem auto;
+  width: 100%;
+  height: 100%;
 `;
 const CareerTotalBox = styled.div`
   display: flex;
@@ -317,7 +286,9 @@ const HeadBox = styled.div`
     }
   }
 `;
-const MainBox = styled.div``;
+const MainBox = styled.div`
+width: 60%;
+`;
 const IntroBox = styled.div`
   display: flex;
   gap: 5px;
@@ -342,7 +313,7 @@ const ReviewBox = styled.div`
   & > div {
     height: 2rem;
   }
-  &> span{
+  & > span {
     height: 2rem;
     background-color: #ff5151;
   }

@@ -28,14 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>
             </div>
           </Menu>
-          <LoginNav>
-            <div>
-              <NavTxt href="/login">로그인</NavTxt>
-            </div>
-            <div>
-              <NavTxt href="/signup">회원가입</NavTxt>
-            </div>
-          </LoginNav>
+          
         </Headerbox>
       </Head>
       <Component {...pageProps} />
@@ -59,7 +52,7 @@ const HomeLink = styled.div`
   padding-left: 10rem;
 `;
 const Headerbox = styled.div`
-  height: 7rem;
+  height: 5rem;
   width: 100%;
   display: flex;
   align-items: center;
@@ -77,14 +70,8 @@ const Menu = styled.nav`
     border-right: 1px solid #d6d6d6;
   }
 `;
-const LoginNav = styled.nav`
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  transition: all 0.2s;
-`;
 
-const NavTxt = styled(Link)`
+export const NavTxt = styled(Link)`
   padding: 5px;
   margin: 10px;
   text-decoration-line: none;
