@@ -16,7 +16,6 @@ export default function SignupC() {
 
   const onChangeGender = (e: ChangeEvent<HTMLInputElement>) =>
     setGender(e.target.value);
-
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
 
@@ -48,38 +47,45 @@ export default function SignupC() {
     <Container>
       <Title>상담사 회원가입</Title>
       <Information onSubmit={onSubmit}>
-        <InformationDetailBox>
-          <StyledP>이름</StyledP>
+        <StyledP>이름</StyledP>
+        <div>
           <StyledInput
             type="text"
             value={name}
             onChange={onChangeName}
+            placeholder={" 이름"}
           ></StyledInput>
-        </InformationDetailBox>
-        <InformationDetailBox>
-          <StyledP>성별</StyledP>
+        </div>
+
+        <StyledP>성별</StyledP>
+        <div>
           <StyledInput
             type="text"
             value={gender}
             onChange={onChangeGender}
+            placeholder={" male 또는 female"}
           ></StyledInput>
-        </InformationDetailBox>
-        <InformationDetailBox>
-          <StyledP>이메일</StyledP>
+        </div>
+
+        <StyledP>이메일</StyledP>
+        <div>
           <StyledInput
             type="text"
             value={email}
             onChange={onChangeEmail}
+            placeholder={" ex) 1234@gmail.com"}
           ></StyledInput>
-        </InformationDetailBox>
-        <InformationDetailBox>
-          <StyledP>비밀번호</StyledP>
+        </div>
+
+        <StyledP>비밀번호</StyledP>
+        <div>
           <StyledInput
             type="password"
             value={password}
             onChange={onChangePassword}
+            placeholder={" 4자 이상 20자 이하"}
           ></StyledInput>
-        </InformationDetailBox>
+        </div>
 
         <Summit type="submit">상담사 회원가입</Summit>
       </Information>
@@ -99,59 +105,72 @@ const Container = styled.div`
 const Title = styled.p`
   font-size: 2em;
   font-weight: 900;
-  color: orange;
+  color: #535756;
 `;
 const Information = styled.form`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  margin-top: 3rem;
 
-  gap: 2rem;
-
-  width: 55rem;
-  height: 30rem;
+  display: grid;
+  grid-template-columns: 7rem 11rem;
+  grid-template-rows: 5rem 5rem 5rem 5rem;
 
   border: 15%;
 `;
 
-const InformationDetailBox = styled.div`
-  padding-top: 0.5rem;
-  width: 12rem;
-  height: 14rem;
-
-  border: solid 1px #c0b3b3;
-  border-radius: 5px;
-  box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.7),
-    6px 6px 10px rgba(0, 0, 0, 0.15);
-  color: orange;
-`;
-
 const StyledInput = styled.input`
-  margin-left: 0.5rem;
-  margin-top: 2rem;
-
   width: 11rem;
   height: 2rem;
 
-  border: solid 1px #c0b3b3;
-  border-radius: 5px;
+  font-size: 15px;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  padding-left: 10px;
+  background-color: rgb(233, 233, 233);
 `;
 
-const StyledP = styled.p`
-  padding-left: 0.5rem;
+const StyledP = styled.div`
   font-weight: 800;
 `;
 
 const Summit = styled.button`
-  padding-top: 0.3rem;
-  margin-left: 45rem;
+  margin-left: 10rem;
+
   width: 8rem;
   height: 2rem;
 
   text-align: center;
 
-  color: orange;
-  border: solid 1px orange;
   border-radius: 5rem;
+
+  background:white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+
+  z-index: 1;
+
+  &:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    background-color: #48c400;
+    border-radius: 5rem;
+    transition: all 0.3s ease;
+  }
+
+  &:hover:after {
+    left: 0;
+    width: 100%;
+  }
+
+  active {
+    top: 2px;
+  }
 `;
