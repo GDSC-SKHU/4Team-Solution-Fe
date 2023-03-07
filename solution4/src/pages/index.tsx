@@ -56,21 +56,19 @@ export default function Home() {
               <p>당신의 스트레스는 괜찮은 상태인가요..?</p>
               <div>How about measuring your stress?</div>
             </PostTextBox>
-            <TestBtn>지금 테스트 하러 가기</TestBtn>
+            <TestBtn><p>지금 테스트 하러 가기</p><br /><p></p>Psychological test button</TestBtn>
           </Poster>
         </ServicePosterBox>
-        <Hr />
         <IntroduceBox>
-          <p>MinTalk의 service를 소개합니다</p>
+          <p>Introduce MinTalk</p>
           <IntrosubBox>
-            <div>상담사와 실시간 상담이 가능합니다</div>
-            <div>심리테스트를 지원합니다.</div>
-            <div>소통을 위한 서비스가 제공됩니다.</div>
+            <div>상담사와 실시간 상담이 가능합니다<br />You can consult in real time.</div>
+            <div>심리테스트를 지원합니다.<br />You can do a psychological test.</div>
+            <div>소통을 위한 서비스가 제공됩니다.<br />There is a board where you can talk about your inner thoughts.</div>
           </IntrosubBox>
         </IntroduceBox>
-        <Hr />
         <ServiceBox>
-          <span>MinTalk 이용자 후기</span>
+          <span>Site Review</span>
           <div>
             {topReviews.map((reviewlist) => {
               return (
@@ -94,11 +92,6 @@ export default function Home() {
   );
 }
 
-const Hr = styled.div`
-  width: 60%;
-  height: 1px;
-  background-color: #dddddd;
-`;
 const IntrosubBox = styled.div`
   display: flex;
   justify-content: center;
@@ -175,10 +168,12 @@ const ServiceBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 3rem;
-  width: 60%;
+  width: 100%;
+  padding-bottom: 3rem;
+  background-color: #e4ffd2;
   & > span {
     font-size: 2rem;
+    font-family: 'Courier New', Courier, monospace;
     margin: 3rem;
   }
   & > div {
@@ -233,7 +228,7 @@ const ListBox = styled.span`
 
 const IntroduceBox = styled.div`
   height: 30rem;
-  width: 60%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -243,6 +238,7 @@ const IntroduceBox = styled.div`
   & > p {
     margin-bottom: 3rem;
     height: 1rem;
+    font-family: 'Courier New', Courier, monospace;
   }
 `;
 
@@ -274,5 +270,4 @@ const MainBox = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background-color: #fffff3;
 `;
