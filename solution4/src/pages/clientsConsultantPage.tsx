@@ -37,11 +37,19 @@ export default function ClientsConsultantPage() {
   }, []);
 
   const [consultant, setConsultant] = useState<any>({});
+  const [consultantReivews, setConsultantReivews] = useState("");
+  const [rate, setRate] = useState("");
+  const [career, setCareer] = useState([]);
+  const [fields, setFields] = useState([]);
 
   //!상담사용 자기소개 조회
   const consultantsPage = () => {
-    return fetch(`https://mintalk.duckdns.org/counselors/my-page`, {
+    let num = 1;
+
+    return fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
       method: "GET",
+      mode: "cors",
+      cache: "default",
       credentials: "include",
     }).then((res) => res.json());
   };
@@ -62,11 +70,19 @@ export default function ClientsConsultantPage() {
     })
       .catch((error) => console.error("Error:", error))
       .finally(() => {
-        consultantsPage().then((res) => setConsultant(res.data));
+        consultantsPage().then((res) => {
+          return (
+            setConsultant(res.data),
+            setConsultantReivews(res.data.reviews[0].content),
+            setRate(res.data.reviews[0].rate),
+            setCareer(res.data.careers),
+            setFields(res.data.fields)
+          );
+        });
       });
   }, []);
 
-  console.log(consultant?.name);
+  console.log(consultant?.name, consultantReivews, career, fields);
   return (
     <>
       <FindpsyPage>
@@ -75,7 +91,7 @@ export default function ClientsConsultantPage() {
             <ProfileImg>
               <Image
                 className={consultant?.name}
-                src="/alreadyImg.jpeg"
+                src={consultant?.profileImageUrl}
                 alt="Picture of the author"
                 width={300}
                 height={300}
@@ -92,19 +108,18 @@ export default function ClientsConsultantPage() {
                     </div>
                   ))}
                 </Stars>
-                <div>5점</div>
+                <span>{rate}점</span>
               </StarBox>
               <ReviewBox>
-                <div>
+                <span>
                   <span>Recent</span> 후기
-                </div>
-                <div>최근 리뷰 널어야 하는 곳</div>
+                </span>
+                <div>{consultantReivews}</div>
               </ReviewBox>
               <IntroBox>
                 <div>
                   <FaQuoteLeft />
                 </div>
-
                 <p>{consultant?.shortIntroduction}</p>
                 <div>
                   <FaQuoteRight />
@@ -134,29 +149,25 @@ export default function ClientsConsultantPage() {
             <HrLine />
             <CareerTotalBox>
               <FieldBox>
-                <CareerBoxHeader># 전문 분야</CareerBoxHeader>
-                <ul>
-                  {fieldList.map(({ id, field }) => {
-                    return (
-                      <>
-                        <li key={id}>{field}</li>
-                      </>
-                    );
-                  })}
-                </ul>
-              </FieldBox>
-              <CareerBox>
                 <CareerBoxHeader># 학력 및 경력</CareerBoxHeader>
-                <ul>
-                  {careerlist.map(({ id, careers }) => {
+                  {career.map((careerlist) => {
                     return (
                       <>
-                        <li key={id}>{careers}</li>
+                        <div key={consultant?.id}>{careerlist}</div>
                       </>
                     );
                   })}
-                </ul>
-              </CareerBox>
+              </FieldBox>
+              <FieldBox>
+                <CareerBoxHeader># 전문 분야</CareerBoxHeader>
+                  {fields.map(({ desc }) => {
+                    return (
+                      <>
+                        <div key={desc}>{desc}</div>
+                      </>
+                    );
+                  })}
+              </FieldBox>
             </CareerTotalBox>
             <HrLine />
             <HospitalBox>
@@ -253,12 +264,15 @@ const HospitalImage = styled.div`
 const CareerTotalBox = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: center;
 `;
 const FieldBox = styled.div`
   height: 15rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
   height: max-content;
+  justify-content: flex-start;
 
   & > ul {
     margin-left: 1rem;
@@ -271,16 +285,7 @@ const CareerBoxHeader = styled.div`
   font-size: 1.5rem;
   font-weight: bolder;
 `;
-const CareerBox = styled.div`
-  height: 18rem;
-  display: flex;
-  flex-direction: column;
-  & > ul {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-  }
-`;
+
 const HrLine = styled.div`
   width: 80%;
   background-color: #b4b4b4;
@@ -329,16 +334,22 @@ const IntroBox = styled.div`
 `;
 const ReviewBox = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 5px;
-  flex-direction: column;
   margin: 1rem 0px;
   height: 5rem;
   & > div {
     height: 2rem;
   }
+  &> span{
+    height: 2rem;
+    background-color: #ff5151;
+  }
 
   & > div > span {
-    color: red;
+    color: #ff5151;
+    font-weight: 500;
   }
 `;
 const FindpsyPage = styled.div`
@@ -348,15 +359,23 @@ const FindpsyPage = styled.div`
 `;
 const ProfileBox = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   width: 60%;
   height: 40%;
 `;
 const ProfileTextBox = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 2rem;
+  margin-left: 2rem;
+  font-size: 1.2rem;
   height: 40%;
+  background-color: antiquewhite;
+  padding: 2rem;
+  width: 50%;
+  border-radius: 15px;
 `;
 const ConsultantName = styled.div`
   height: 2rem;
@@ -401,5 +420,5 @@ const ProfileImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 3rem;
+  margin-right: 2rem;
 `;

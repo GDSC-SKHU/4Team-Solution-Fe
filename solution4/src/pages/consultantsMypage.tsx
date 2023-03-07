@@ -66,7 +66,7 @@ export default function ConsultantsMypage() {
       });
   }, []);
 
-  console.log(consultant?.name);
+  console.log(consultant);
 
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -84,7 +84,7 @@ export default function ConsultantsMypage() {
         <div>
           <Image
             alt="consultantImg"
-            src="/alreadyImg.jpeg"
+            src={consultant?.profileImageUrl}
             width={300}
             height={300}
           />
@@ -166,6 +166,7 @@ const ConsultantImgBox = styled.div`
         &:focus {
           background-color: #6b954a;
           color: white;
+          transition: all 0.5s;
         }
       }
     }
