@@ -1,10 +1,11 @@
 import Link from "next/link";
 import styled from "styled-components";
 
-export default function Login() {
+
+export default function Signup() {
   return (
     <>
-      <NavTxt href="/login">로그인</NavTxt>
+      <NavTxt href="/signup">회원가입</NavTxt>
     </>
   );
 }

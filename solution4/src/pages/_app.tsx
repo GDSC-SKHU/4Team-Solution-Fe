@@ -3,6 +3,8 @@ import type { AppProps } from "next/app";
 import Link from "next/link";
 import styled from "styled-components";
 import Image from "next/image";
+import Login from "../components/Login";
+import Signup from "../components/Signup"
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -28,7 +30,10 @@ export default function App({ Component, pageProps }: AppProps) {
               <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>
             </div>
           </Menu>
-          
+          <LoginNav>
+            <Login />
+            <Signup />
+          </LoginNav>
         </Headerbox>
       </Head>
       <Component {...pageProps} />
@@ -71,7 +76,7 @@ const Menu = styled.nav`
   }
 `;
 
-export const NavTxt = styled(Link)`
+const NavTxt = styled(Link)`
   padding: 5px;
   margin: 10px;
   text-decoration-line: none;
@@ -81,4 +86,11 @@ export const NavTxt = styled(Link)`
     color: #0b1d00d0;
     transition: all 0.2s;
   }
+`;
+
+const LoginNav = styled.nav`
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
 `;
