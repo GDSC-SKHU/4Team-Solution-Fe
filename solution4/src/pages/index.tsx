@@ -51,20 +51,38 @@ export default function Home() {
       <MainBox>
         <ServicePosterBox>
           <Poster>
-            <PostTextBox>
-              <span>from minTalk</span>
-              <p>당신의 스트레스는 괜찮은 상태인가요..?</p>
-              <div>How about measuring your stress?</div>
-            </PostTextBox>
-            <TestBtn><p>지금 테스트 하러 가기</p><br /><p></p>Psychological test button</TestBtn>
+            <div>
+              <PostTextBox>
+                <span>from minTalk</span>
+                <p>당신의 스트레스는 괜찮은 상태인가요..?</p>
+                <div>How about measuring your stress?</div>
+              </PostTextBox>
+              <TestBtn>
+                지금 테스트 하러 가기
+                <br />
+                Psychological test button
+              </TestBtn>
+            </div>
           </Poster>
         </ServicePosterBox>
         <IntroduceBox>
           <p>Introduce MinTalk</p>
           <IntrosubBox>
-            <div>상담사와 실시간 상담이 가능합니다<br />You can consult in real time.</div>
-            <div>심리테스트를 지원합니다.<br />You can do a psychological test.</div>
-            <div>소통을 위한 서비스가 제공됩니다.<br />There is a board where you can talk about your inner thoughts.</div>
+            <div>
+              상담사와 실시간 상담이 가능합니다
+              <br />
+              You can consult in real time.
+            </div>
+            <div>
+              심리테스트를 지원합니다.
+              <br />
+              You can do a psychological test.
+            </div>
+            <div>
+              소통을 위한 서비스가 제공됩니다.
+              <br />
+              There is a board where you can talk about your inner thoughts.
+            </div>
           </IntrosubBox>
         </IntroduceBox>
         <ServiceBox>
@@ -150,16 +168,20 @@ const PostTextBox = styled.div`
 `;
 const TestBtn = styled.button`
   width: 16rem;
+  height: 7rem;
   padding: 10px;
   font-size: 1.3rem;
-  background-color: #9bd58b;
+  background-color: #48c400;
+  box-shadow: 0px 10px 0px 0px #3ca002;
+  color: white;
   border-radius: 15px;
   outline: none;
+  border: none;
   animation: ${fade};
   animation-duration: 3s;
   &:hover {
-    background-color: #00710d;
-    transition: all 0.2s;
+    margin-top: 10px;
+    box-shadow: none;
   }
 `;
 
@@ -173,7 +195,7 @@ const ServiceBox = styled.div`
   background-color: #e4ffd2;
   & > span {
     font-size: 2rem;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
     margin: 3rem;
   }
   & > div {
@@ -238,7 +260,7 @@ const IntroduceBox = styled.div`
   & > p {
     margin-bottom: 3rem;
     height: 1rem;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
   }
 `;
 
@@ -249,12 +271,19 @@ const Poster = styled.div`
   display: flex;
   color: white;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background-image: url("/stressguy.jpeg");
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
+  &>div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+  }
 `;
 const ServicePosterBox = styled.div`
   height: 45rem;
