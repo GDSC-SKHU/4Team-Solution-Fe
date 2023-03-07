@@ -47,6 +47,13 @@ export default function ConsultantsMypage() {
   const [location, setLocation] = useState<string>("");
   const [careers, setCareers] = useState([]);
   const [fields, setFields] = useState([]);
+  const [Files, setFiles] = useState('');
+
+  const onLoadFile = (e:any)=>{
+    const file = e.target.files;
+    setFiles(file);
+    console.log(file);
+  }
 
   return (
     <ConMypageMain>
@@ -59,7 +66,7 @@ export default function ConsultantsMypage() {
             width={300}
             height={300}
           />
-          <button>이미지 등록 및 수정</button>
+          <input type="file" id="파일 선택 하는 버튼" onChange={onLoadFile} />
         </div>
         <form>
           <div>
@@ -110,7 +117,7 @@ const ConsultantImgBox = styled.div`
     display: flex;
     flex-direction: column;
     margin: auto;
-    & > button {
+    & > input {
       height: 2rem;
     }
   }
