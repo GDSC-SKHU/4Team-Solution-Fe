@@ -7,15 +7,14 @@ import Googlemaps from "@/components/Googlemaps";
 
 export default function ClientsConsultantPage({}) {
   const [consultant, setConsultant] = useState<any>({});
-  const [consultantReivews, setConsultantReivews] = useState("");
-  const [rate, setRate] = useState("");
+  const [consultantReivews, setConsultantReivews] = useState([]);
   const [career, setCareer] = useState([]);
   const [fields, setFields] = useState([]);
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState("");
 
   //!상담사용 자기소개 조회
   const consultantsPage = () => {
-    let num = 1;
+    let num = 5;
 
     return fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
       method: "GET",
@@ -44,8 +43,7 @@ export default function ClientsConsultantPage({}) {
         consultantsPage().then((res) => {
           return (
             setConsultant(res.data),
-            setConsultantReivews(res.data.reviews[0].content),
-            setRate(res.data.reviews[0].rate),
+            setConsultantReivews(res.data.reviews),
             setCareer(res.data.careers),
             setFields(res.data.fields),
             setLocation(res.data.location)
@@ -54,7 +52,7 @@ export default function ClientsConsultantPage({}) {
       });
   }, []);
 
-  console.log(consultant?.name, consultantReivews, career, fields);
+  console.log(consultantReivews.length);
   return (
     <>
       <FindpsyPage>
@@ -80,13 +78,14 @@ export default function ClientsConsultantPage({}) {
                     </div>
                   ))}
                 </Stars>
-                <span>{rate}점</span>
+                {/* <span>{consultantReivews[0]["rate"]}점</span> */}
               </StarBox>
               <ReviewBox>
                 <span>
                   <span>Recent</span> 후기
                 </span>
-                <div>{consultantReivews}</div>
+                {(consultantReivews.length>0)?<div>{consultantReivews[0]["content"]}</div>:<div></div>}
+                <div></div>
               </ReviewBox>
               <IntroBox>
                 <div>
@@ -220,7 +219,7 @@ const HospitalBox = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  &>span{
+  & > span {
     margin-top: 3rem;
     font-size: 1.1rem;
   }
@@ -287,7 +286,7 @@ const HeadBox = styled.div`
   }
 `;
 const MainBox = styled.div`
-width: 60%;
+  width: 60%;
 `;
 const IntroBox = styled.div`
   display: flex;
