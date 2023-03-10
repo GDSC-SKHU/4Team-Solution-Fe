@@ -52,9 +52,9 @@ const List = () => {
       })} */}
       <Link href="./clientsConsultantPage">
         <ConsultantBox>
-          {data.map((Record) => {
+          {data.map((Record, counselor) => {
             return (
-              <Consultant key={Record.id} onClick={() => setId(Record.id)}>
+              <Consultant key={counselor} onClick={() => setId(Record.id)}>
                 <StyledGrid>
                   <Styledinformation>
                     <StyledSpan>{Record.name}</StyledSpan>
