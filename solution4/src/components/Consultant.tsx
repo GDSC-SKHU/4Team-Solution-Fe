@@ -1,11 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-
-const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
-  e.preventDefault();
-  // 이걸 눌렀을 때 num을 id랑 같게 만들어줘야함  여기서 id는 (api)consultant에 있는 id를 의미
-};
 
 interface Record {
   id: number;
@@ -15,18 +11,31 @@ interface Record {
   fields: [{ desc: string }];
 }
 
+export let num = 1;
+
 const List = () => {
   const [data, setData] = useState<Record[]>([]);
+  const [id, setId] = useState<Number>();
+  num = Number(id);
 
-  axios
-    .get("https://mintalk.duckdns.org")
-    .then((response) => {
-      setData(response.data.data); //받아온 데이터를 data에 저장
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  // useEffect(() => { }, [setData]);
+  const counselor = useCallback(async () => {
+    axios
+      .get("https://mintalk.duckdns.org")
+      .then((response) => {
+        setData(response.data.data); //받아온 데이터를 data에 저장
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    counselor();
+  }, [counselor]);
+
+  console.log(num);
+  // };
+
   return (
     <Box>
       {/* {data.map((Record, number) => {
@@ -41,30 +50,32 @@ const List = () => {
           </div>
         );
       })} */}
-
-      <ConsultantBox>
-        {data.map((Record, number) => {
-          return (
-            <Consultant key={number} onClick={onClick}>
-              <StyledGrid>
-                <Styledinformation>
-                  <StyledSpan>{Record.name}</StyledSpan>
-                  <p>소개: {Record.shortIntroduction}</p>
-                  <StyledP>{Record.location}</StyledP>
-                  {Record.fields.map((f, h) => (
-                    <div key={h}>{f.desc}</div>
-                  ))}
-                </Styledinformation>
-              </StyledGrid>
-            </Consultant>
-          );
-        })}
-      </ConsultantBox>
+      <Link href="./clientsConsultantPage">
+        <ConsultantBox>
+          {data.map((Record) => {
+            return (
+              <Consultant key={Record.id} onClick={() => setId(Record.id)}>
+                <StyledGrid>
+                  <Styledinformation>
+                    <StyledSpan>{Record.name}</StyledSpan>
+                    <p>소개: {Record.shortIntroduction}</p>
+                    <StyledP>{Record.location}</StyledP>
+                    {Record.fields.map((f, h) => (
+                      <div key={h}>{f.desc}</div>
+                    ))}
+                  </Styledinformation>
+                </StyledGrid>
+              </Consultant>
+            );
+          })}
+        </ConsultantBox>
+      </Link>
     </Box>
   );
 };
 
 export default List;
+
 const Box = styled.div`
   display: flex;
   flex-direction: column;
