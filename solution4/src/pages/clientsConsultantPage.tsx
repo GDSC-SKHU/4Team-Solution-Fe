@@ -4,12 +4,8 @@ import React, { useEffect, useState } from "react";
 import { FaStar, FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import Googlemaps from "@/components/Googlemaps";
-<<<<<<< HEAD
 import { Player } from "@lottiefiles/react-lottie-player";
-=======
 import { num } from "@/components/Consultant";
-
->>>>>>> develop
 
 export default function ClientsConsultantPage({}) {
   const [consultant, setConsultant] = useState<any>({});
@@ -30,11 +26,6 @@ export default function ClientsConsultantPage({}) {
 
   //!상담사용 자기소개 조회
   const consultantsPage = () => {
-<<<<<<< HEAD
-    let num = 1;
-
-=======
->>>>>>> develop
     return fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
       method: "GET",
       mode: "cors",
