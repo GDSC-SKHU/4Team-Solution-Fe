@@ -1,5 +1,4 @@
 import styled, { keyframes } from "styled-components";
-import { Player } from "@lottiefiles/react-lottie-player";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
 import { FiUser } from "react-icons/fi";

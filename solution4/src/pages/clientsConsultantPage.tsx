@@ -1,9 +1,10 @@
 import Image from "next/image";
 import styled from "styled-components";
-import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import React, { useEffect, useState } from "react";
 import { FaStar, FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import Googlemaps from "@/components/Googlemaps";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 export default function ClientsConsultantPage({}) {
   const [consultant, setConsultant] = useState<any>({});
@@ -11,10 +12,20 @@ export default function ClientsConsultantPage({}) {
   const [career, setCareer] = useState([]);
   const [fields, setFields] = useState([]);
   const [location, setLocation] = useState("");
+  const [allRate, setAllRate] = useState<number>();
+  const [reivewModal, setReviewModal] = useState(false);
+
+  const calculateRate = () => {
+    let sum = 0;
+    for (let i = 0; i < consultantReivews.length; i++) {
+      sum = sum + consultantReivews[i]["rate"];
+      setAllRate(Math.round(sum / consultantReivews.length));
+    }
+  };
 
   //!상담사용 자기소개 조회
   const consultantsPage = () => {
-    let num = 5;
+    let num = 1;
 
     return fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
       method: "GET",
@@ -46,13 +57,13 @@ export default function ClientsConsultantPage({}) {
             setConsultantReivews(res.data.reviews),
             setCareer(res.data.careers),
             setFields(res.data.fields),
-            setLocation(res.data.location)
+            setLocation(res.data.location),
+            calculateRate()
           );
         });
       });
   }, []);
 
-  console.log(consultantReivews.length);
   return (
     <>
       <FindpsyPage>
@@ -84,7 +95,11 @@ export default function ClientsConsultantPage({}) {
                 <span>
                   <span>Recent</span> 후기
                 </span>
-                {(consultantReivews.length>0)?<div>{consultantReivews[0]["content"]}</div>:<div></div>}
+                {consultantReivews.length > 0 ? (
+                  <div>{consultantReivews[0]["content"]}</div>
+                ) : (
+                  <div></div>
+                )}
                 <div></div>
               </ReviewBox>
               <IntroBox>
@@ -121,23 +136,27 @@ export default function ClientsConsultantPage({}) {
             <CareerTotalBox>
               <FieldBox>
                 <CareerBoxHeader># 학력 및 경력</CareerBoxHeader>
-                {career.map((careerlist) => {
-                  return (
-                    <>
-                      <div key={consultant?.id}>{careerlist}</div>
-                    </>
-                  );
-                })}
+                <div>
+                  {career.map((careerlist) => {
+                    return (
+                      <>
+                        <div key={consultant?.id}>{careerlist}</div>
+                      </>
+                    );
+                  })}
+                </div>
               </FieldBox>
               <FieldBox>
                 <CareerBoxHeader># 전문 분야</CareerBoxHeader>
-                {fields.map(({ desc }) => {
-                  return (
-                    <>
-                      <div key={desc}>{desc}</div>
-                    </>
-                  );
-                })}
+                <div>
+                  {fields.map(({ desc }) => {
+                    return (
+                      <>
+                        <div key={desc}>{desc}</div>
+                      </>
+                    );
+                  })}
+                </div>
               </FieldBox>
             </CareerTotalBox>
             <HrLine />
@@ -153,7 +172,7 @@ export default function ClientsConsultantPage({}) {
               <CareerBoxHeader># 후기</CareerBoxHeader>
 
               <RateBox>
-                <p>전체 평점</p>
+                <p>{consultantReivews.length}명의 평가</p>
                 <Stars>
                   {Array.from({ length: 5 }, (__, i) => (
                     <div key={i}>
@@ -161,20 +180,39 @@ export default function ClientsConsultantPage({}) {
                     </div>
                   ))}
                 </Stars>
-                <div>5점</div>
+                <div>{allRate}점</div>
               </RateBox>
             </ReviewMainBox>
             <UserList>
-              <UserBox>
-                <div>
-                  <div>
-                    <AiOutlineUser size={25} />
-                  </div>
-                  <p>익명</p>
-                </div>
-                <p>너무너무 귀여운 강아지 선생님</p>
-              </UserBox>
+              {consultantReivews.map((Review) => {
+                return (
+                  <>
+                    <UserBox>
+                      <div>
+                        <div>
+                          <AiOutlineUser size={25} />
+                        </div>
+                        <p>익명</p>
+                      </div>
+                      <p>{Review["content"]}</p>
+                    </UserBox>
+                  </>
+                );
+              })}
             </UserList>
+
+            <LottieBox>
+              <div >
+                <Player
+                  autoplay
+                  loop
+                  speed={0.9}
+                  src="https://assets4.lottiefiles.com/packages/lf20_cYWJg2.json"
+                  style={{ height: "50px", width: "600px" }}
+                />
+                <p>후기 남기러 가기</p>
+              </div>
+            </LottieBox>
           </MainBox>
         </>
       </FindpsyPage>
@@ -184,7 +222,6 @@ export default function ClientsConsultantPage({}) {
 const UserBox = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 10rem;
   font-size: 1.2rem;
   & > div {
     display: flex;
@@ -202,12 +239,21 @@ const UserBox = styled.div`
   }
 `;
 const UserList = styled.div`
-  margin: 5rem auto;
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 60%;
+  height: 20rem;
+  padding: 3rem;
+  background-color: #ebebeb;
+  overflow: scroll;
 `;
 const RateBox = styled.div`
   display: flex;
   font-size: 1.5rem;
   gap: 10px;
+  margin-top: 3rem;
 `;
 const ReviewMainBox = styled.div`
   display: flex;
@@ -247,6 +293,13 @@ const FieldBox = styled.div`
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
+  }
+  & > div {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
 const CareerBoxHeader = styled.div`
@@ -391,4 +444,30 @@ const ProfileImg = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 2rem;
+`;
+
+const LottieBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  & > div {
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    height: fit-content;
+    width: fit-content;
+    box-shadow: 1px 1px 13px #c9c9c9;
+    & > p {
+      font-size: 1.3rem;
+    }
+    &:hover {
+      background-color: #d0d0d011;
+      box-shadow: 1px 1px 5px #c9c9c9;
+    }
+  }
+  margin: 1rem auto 3rem;
 `;
