@@ -43,9 +43,7 @@ export default function LoginC() {
 
   return (
     <LoginBoxC onSubmit={onFinish}>
-      <p>상담사</p>
-      <StyledHr></StyledHr>
-      <hr></hr>
+      <MemberType>상담사</MemberType>
       <InputBox>
         <p>이메일</p>
         <EmailBox
@@ -73,9 +71,20 @@ const LoginBoxC = styled.form`
   justify-content: center;
   align-items: center;
 
-  width: 20rem;
-  height: 25rem;
+  width: 100%;
+  height: 22rem;
+  background-color: #f6faf7;
 `;
+
+const MemberType = styled.p`
+ padding-right: 12rem;
+ padding-bottom: 2rem;
+
+ font-size: 2rem;
+ font-weight: 600;
+ 
+ color: gray;
+`
 
 const InputBox = styled.div`
   display: grid;
@@ -85,13 +94,6 @@ const InputBox = styled.div`
   gap: 1rem;
 `;
 
-const StyledHr = styled.hr`
-  border: 0;
-  width: 50%;
-  height: 2px;
-  background: #535756;
-  margin-bottom: 2rem;
-`;
 
 const EmailBox = styled.input`
   width: 12rem;
@@ -104,7 +106,4 @@ const PasswordBox = styled.input`
 const Submit = styled.button`
   width: 17.2rem;
   height: 2rem;
-
-  background-color: #48c400;
-  border: solid 1px #3ca002;
 `;
