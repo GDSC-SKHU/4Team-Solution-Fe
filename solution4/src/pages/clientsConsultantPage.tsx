@@ -6,6 +6,9 @@ import { AiOutlineUser } from "react-icons/ai";
 import Googlemaps from "@/components/Googlemaps";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { num } from "@/components/Consultant";
+import ReviewModal from "@/components/ReviewModal";
+import StarRate from "@/components/StarRate";
+// import { starArray } from "@/components/StarRate";
 
 export default function ClientsConsultantPage({}) {
   const [consultant, setConsultant] = useState<any>({});
@@ -16,12 +19,45 @@ export default function ClientsConsultantPage({}) {
   const [allRate, setAllRate] = useState<number>();
   const [reivewModal, setReviewModal] = useState(false);
 
+  const [starClick, setStarClick] = useState(null);
+  const [preClickedpreClicked, setPreClicked] = useState(starClick);
+
   const calculateRate = () => {
     let sum = 0;
     for (let i = 0; i < consultantReivews.length; i++) {
       sum = sum + consultantReivews[i]["rate"];
       setAllRate(Math.round(sum / consultantReivews.length));
     }
+  };
+
+  const goToFetch = (e: any) => {
+    e.preventDefault();
+    const nowClicked = e.target.key; // 현재 클릭한 id
+    setStarClick(nowClicked);
+
+    // if (nowClicked !== null) {
+    //   // 별이 클릭한 상태라면
+    //   if (nowClicked > preClicked) {
+    //     for (let i = 1; i <= nowClicked; i++) {
+    //       const star_id = document.getElementById(i);
+    //       star_id.src = "/img/star.png";
+    //     }
+    //   } else if (nowClicked < preClicked) {
+    //     for (let i = 1; i <= nowClicked; i++) {
+    //       const star_id = document.getElementById(i);
+    //       star_id.src = "/img/star.png";
+    //     }
+    //     for (let j = 5; j > nowClicked; j--) {
+    //       const star_id = document.getElementById(j);
+    //       star_id.src = "/img/star-regular.png";
+    //     }
+    //   } else {
+    //     for (let i = 1; i <= nowClicked; i++) {
+    //       const star_id = document.getElementById(i);
+    //       star_id.src = "/img/star-regular.png";
+    //     }
+    //   }
+    // }
   };
 
   //!상담사용 자기소개 조회
@@ -42,7 +78,6 @@ export default function ClientsConsultantPage({}) {
 
     fetch(url, {
       method: "POST",
-      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
@@ -81,13 +116,27 @@ export default function ClientsConsultantPage({}) {
               <ConsultantName>{consultant?.name} 상담사</ConsultantName>
               <StarBox>
                 <div>평점</div>
-                <Stars>
-                  {Array.from({ length: 5 }, (__, i) => (
-                    <div key={i}>
-                      <FaStar />
-                    </div>
+                <div
+                  style={{
+                    width: `130px`,
+                    color: "#ffa352",
+                    height: "2rem",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  {[1, 2, 3, 4, 5].map((el) => (
+                    <Image
+                      key={el}
+                      // className={styles.star}
+                      src="/Star.png"
+                      alt=""
+                      width={30}
+                      height={30}
+                      onClick={goToFetch}
+                    />
                   ))}
-                </Stars>
+                </div>
                 {/* <span>{consultantReivews[0]["rate"]}점</span> */}
               </StarBox>
               <ReviewBox>
@@ -172,13 +221,21 @@ export default function ClientsConsultantPage({}) {
 
               <RateBox>
                 <p>{consultantReivews.length}명의 평가</p>
-                <Stars>
-                  {Array.from({ length: 5 }, (__, i) => (
-                    <div key={i}>
+                <div
+                  style={{
+                    width: `130px`,
+                    color: "#ffa352",
+                    height: "2rem",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  {[1, 2, 3, 4, 5].map((el) => (
+                    <div key={el} onClick={goToFetch}>
                       <FaStar />
                     </div>
                   ))}
-                </Stars>
+                </div>
                 <div>{allRate}점</div>
               </RateBox>
             </ReviewMainBox>
@@ -200,8 +257,12 @@ export default function ClientsConsultantPage({}) {
               })}
             </UserList>
 
-            <LottieBox>
-              <div >
+            <LottieBox
+              onClick={() => {
+                setReviewModal((prev) => !prev);
+              }}
+            >
+              <div>
                 <Player
                   autoplay
                   loop
@@ -212,12 +273,14 @@ export default function ClientsConsultantPage({}) {
                 <p>후기 남기러 가기</p>
               </div>
             </LottieBox>
+            {reivewModal ? <ReviewModal /> : <></>}
           </MainBox>
         </>
       </FindpsyPage>
     </>
   );
 }
+
 const UserBox = styled.div`
   display: flex;
   align-items: center;
@@ -403,11 +466,9 @@ const ConsultantName = styled.div`
   height: 2rem;
   font-size: larger;
   margin: 1rem 0px;
+  width: 130px;
 `;
-const Stars = styled.div`
-  display: flex;
-  color: #ffa352;
-`;
+
 const StarBox = styled.div`
   display: flex;
   gap: 0.5rem;
