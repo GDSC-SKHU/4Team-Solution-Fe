@@ -6,9 +6,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import Googlemaps from "@/components/Googlemaps";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { num } from "@/components/Consultant";
-import ReviewModal from "@/components/ReviewModal";
-import StarRate from "@/components/StarRate";
-// import { starArray } from "@/components/StarRate";
+import RateModal from "@/components/RateModal";
 
 export default function ClientsConsultantPage({}) {
   const [consultant, setConsultant] = useState<any>({});
@@ -18,46 +16,16 @@ export default function ClientsConsultantPage({}) {
   const [location, setLocation] = useState("");
   const [allRate, setAllRate] = useState<number>();
   const [reivewModal, setReviewModal] = useState(false);
-
-  const [starClick, setStarClick] = useState(null);
-  const [preClickedpreClicked, setPreClicked] = useState(starClick);
-
+  const handleCloseModal = () => {
+    // 모달을 닫을 때 수행할 로직
+    setReviewModal(false);
+  };
   const calculateRate = () => {
     let sum = 0;
     for (let i = 0; i < consultantReivews.length; i++) {
       sum = sum + consultantReivews[i]["rate"];
       setAllRate(Math.round(sum / consultantReivews.length));
     }
-  };
-
-  const goToFetch = (e: any) => {
-    e.preventDefault();
-    const nowClicked = e.target.key; // 현재 클릭한 id
-    setStarClick(nowClicked);
-
-    // if (nowClicked !== null) {
-    //   // 별이 클릭한 상태라면
-    //   if (nowClicked > preClicked) {
-    //     for (let i = 1; i <= nowClicked; i++) {
-    //       const star_id = document.getElementById(i);
-    //       star_id.src = "/img/star.png";
-    //     }
-    //   } else if (nowClicked < preClicked) {
-    //     for (let i = 1; i <= nowClicked; i++) {
-    //       const star_id = document.getElementById(i);
-    //       star_id.src = "/img/star.png";
-    //     }
-    //     for (let j = 5; j > nowClicked; j--) {
-    //       const star_id = document.getElementById(j);
-    //       star_id.src = "/img/star-regular.png";
-    //     }
-    //   } else {
-    //     for (let i = 1; i <= nowClicked; i++) {
-    //       const star_id = document.getElementById(i);
-    //       star_id.src = "/img/star-regular.png";
-    //     }
-    //   }
-    // }
   };
 
   //!상담사용 자기소개 조회
@@ -126,15 +94,9 @@ export default function ClientsConsultantPage({}) {
                   }}
                 >
                   {[1, 2, 3, 4, 5].map((el) => (
-                    <Image
-                      key={el}
-                      // className={styles.star}
-                      src="/Star.png"
-                      alt=""
-                      width={30}
-                      height={30}
-                      onClick={goToFetch}
-                    />
+                    <div key={el}>
+                      <FaStar />
+                    </div>
                   ))}
                 </div>
                 {/* <span>{consultantReivews[0]["rate"]}점</span> */}
@@ -231,7 +193,7 @@ export default function ClientsConsultantPage({}) {
                   }}
                 >
                   {[1, 2, 3, 4, 5].map((el) => (
-                    <div key={el} onClick={goToFetch}>
+                    <div key={el}>
                       <FaStar />
                     </div>
                   ))}
@@ -273,7 +235,7 @@ export default function ClientsConsultantPage({}) {
                 <p>후기 남기러 가기</p>
               </div>
             </LottieBox>
-            {reivewModal ? <ReviewModal /> : <></>}
+            {reivewModal ? <RateModal onClose={handleCloseModal} /> : <></>}
           </MainBox>
         </>
       </FindpsyPage>
@@ -466,7 +428,10 @@ const ConsultantName = styled.div`
   height: 2rem;
   font-size: larger;
   margin: 1rem 0px;
-  width: 130px;
+  width: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StarBox = styled.div`
