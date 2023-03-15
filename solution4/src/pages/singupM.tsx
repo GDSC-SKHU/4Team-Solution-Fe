@@ -26,24 +26,33 @@ export default function SignupC() {
   const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const CounselorData = {
-      name: name,
-      gender: gender,
-      email: email,
-      password: password,
-    };
-
     axios
-      .post("https://mintalk.duckdns.org/clients", {
-        CounselorData,
-      })
+      .post(
+        "https://mintalk.duckdns.org/clients",
+        {
+          name: name,
+          gender: gender,
+          email: email,
+          password: password,
+        },
+        {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        }
+      )
       .then((response) => {
         console.log(response.data);
         router.push("/login");
       })
       .catch((error) => {
-        console.log(error);
+        if (error.response.status === 409) {
+          alert("이미 존재하는 내담자 이메일입니다.");
+        }
       });
+    if (gender !== "female" && gender !== "male") {
+      alert("성별은 male 혹은 female로 입력하십시오.");
+    }
   };
   return (
     <Container>
@@ -85,7 +94,7 @@ export default function SignupC() {
             type="password"
             value={password}
             onChange={onChangePassword}
-            placeholder={" 4자 이상 20자 이하"}
+            placeholder={" password"}
           ></StyledInput>
         </div>
 
