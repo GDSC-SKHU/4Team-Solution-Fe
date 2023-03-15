@@ -14,7 +14,7 @@ export default function ClientsConsultantPage({}) {
   const [career, setCareer] = useState([]);
   const [fields, setFields] = useState([]);
   const [location, setLocation] = useState("");
-  const [allRate, setAllRate] = useState<number>();
+  const [allRate, setAllRate] = useState<number>(0);
   const [reivewModal, setReviewModal] = useState(false);
   const handleCloseModal = () => {
     // 모달을 닫을 때 수행할 로직
@@ -56,10 +56,10 @@ export default function ClientsConsultantPage({}) {
         consultantsPage().then((res) => {
           return (
             setConsultant(res.data),
-            setConsultantReivews(res.data.reviews),
-            setCareer(res.data.careers),
-            setFields(res.data.fields),
-            setLocation(res.data.location),
+            setConsultantReivews(res?.data?.reviews),
+            setCareer(res?.data?.careers),
+            setFields(res?.data?.fields),
+            setLocation(res?.data?.location),
             calculateRate()
           );
         });
@@ -105,7 +105,7 @@ export default function ClientsConsultantPage({}) {
                 <span>
                   <span>Recent</span> 후기
                 </span>
-                {consultantReivews.length > 0 ? (
+                {consultantReivews?.length > 0 ? (
                   <div>{consultantReivews[0]["content"]}</div>
                 ) : (
                   <div></div>
@@ -147,7 +147,7 @@ export default function ClientsConsultantPage({}) {
               <FieldBox>
                 <CareerBoxHeader># 학력 및 경력</CareerBoxHeader>
                 <div>
-                  {career.map((careerlist) => {
+                  {career?.map((careerlist) => {
                     return (
                       <>
                         <div key={consultant?.id}>{careerlist}</div>
@@ -159,7 +159,7 @@ export default function ClientsConsultantPage({}) {
               <FieldBox>
                 <CareerBoxHeader># 전문 분야</CareerBoxHeader>
                 <div>
-                  {fields.map(({ desc }) => {
+                  {fields?.map(({ desc }) => {
                     return (
                       <>
                         <div key={desc}>{desc}</div>
@@ -182,7 +182,7 @@ export default function ClientsConsultantPage({}) {
               <CareerBoxHeader># 후기</CareerBoxHeader>
 
               <RateBox>
-                <p>{consultantReivews.length}명의 평가</p>
+                <p>{consultantReivews?.length}명의 평가</p>
                 <div
                   style={{
                     width: `130px`,
@@ -202,7 +202,7 @@ export default function ClientsConsultantPage({}) {
               </RateBox>
             </ReviewMainBox>
             <UserList>
-              {consultantReivews.map((Review) => {
+              {consultantReivews?.map((Review) => {
                 return (
                   <>
                     <UserBox>
@@ -212,11 +212,16 @@ export default function ClientsConsultantPage({}) {
                         </div>
                         <p>익명</p>
                       </div>
-                      <p>{Review["content"]}</p>
+                      <p>{Review["content"]}명</p>
                     </UserBox>
                   </>
                 );
               })}
+              {consultantReivews.length === 0 ? (
+                <p>아직 후기가 존재하지 않습니다..</p>
+              ) : (
+                <></>
+              )}
             </UserList>
 
             <LottieBox
@@ -266,6 +271,8 @@ const UserList = styled.div`
   margin: 4rem auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 1rem;
   width: 60%;
   height: 20rem;

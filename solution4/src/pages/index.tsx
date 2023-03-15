@@ -166,8 +166,8 @@ const PostTextBox = styled.div`
   }
 `;
 const TestBtn = styled.button`
-  width: 16rem;
-  height: 7rem;
+  width: 27rem;
+  height: 5rem;
   padding: 10px;
   font-size: 1.3rem;
   background-color: #48c400;
