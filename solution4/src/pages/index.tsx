@@ -44,7 +44,8 @@ export default function Home() {
   // console.log('?',topReviews);
   //! 이게 6번이나 찍히는 이유는 랜더링을 할때마다 실행하기 때문인데 이 횟수가 많아질 수록 불리하다.
   // 랜더링 횟수를 줄이는 방법은 상태 변경 등의 사항을 줄이는 것.
-
+  
+  
   return (
     <>
       <MainBox>

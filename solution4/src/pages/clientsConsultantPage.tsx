@@ -39,10 +39,6 @@ export default function ClientsConsultantPage({}) {
   };
   useEffect(() => {
     const url = "https://mintalk.duckdns.org/sign-in/counselors";
-    const data = {
-      email: "csrf@gmail.com",
-      password: "1234",
-    };
 
     fetch(url, {
       method: "POST",
