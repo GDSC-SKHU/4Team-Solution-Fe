@@ -60,7 +60,7 @@ function Search(props: SearchProps) {
     setField([]);
     setGender([]);
 
-    console.log(field, gender); //문제는 흠.. reset 버튼을 클릭후 다시 gender을 선택하고 field를 선택하면 잘 되는데 filed를 먼저 선택하면 value 값을 잘 저장되지만, checked = true 가 안됨
+    console.log(field, gender);
   };
 
   return (
@@ -97,7 +97,7 @@ function Search(props: SearchProps) {
         <CheckBox
           label="Relationship"
           value="relationship"
-          checked={field.includes("readership")}
+          checked={field.includes("relationship")}
           onChange={handleFieldChange}
         />
         <CheckBox
