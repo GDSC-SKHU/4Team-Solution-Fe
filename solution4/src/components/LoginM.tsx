@@ -33,6 +33,8 @@ export default function LoginM() {
       //   router.push("/");
       // })
       .then((res) => {
+        console.log('res', res.headers,res.headers.get('Set-Cookie'));
+        
         res;
         router.push("/");
       })

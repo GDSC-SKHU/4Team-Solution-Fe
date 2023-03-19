@@ -8,6 +8,7 @@ import { Player } from "@lottiefiles/react-lottie-player";
 import { num } from "@/components/Consultant";
 import RateModal from "@/components/RateModal";
 
+
 export default function ClientsConsultantPage({}) {
   const [consultant, setConsultant] = useState<any>({});
   const [consultantReivews, setConsultantReivews] = useState([]);

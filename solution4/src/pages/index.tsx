@@ -25,26 +25,29 @@ export default function Home() {
   // const animatedItem = useScrollFadeIn();
   const [topReviews, setTopReviews] = useState([]);
 
-  const postReview = () => {
-    let num = 1;
-    return fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
+  const postReview = async () => {
+    let num = 7;
+    const res = await fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
       method: "GET",
       mode: "cors",
       cache: "default",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        return res.data;
-      });
+    });
+    const data = await res.json();
+    return data.data;
   };
+  
   useEffect(() => {
-    postReview().then((res) => setTopReviews(res.reviews.slice(0, 4)));
-  });
+    const fetchData = async () => {
+      const reviews = await postReview();
+      setTopReviews(reviews.reviews.slice(0, 3));
+    };
+    fetchData();
+  }, []);
+  
 
   // console.log('?',topReviews);
   //! 이게 6번이나 찍히는 이유는 랜더링을 할때마다 실행하기 때문인데 이 횟수가 많아질 수록 불리하다.
   // 랜더링 횟수를 줄이는 방법은 상태 변경 등의 사항을 줄이는 것.
-  
   
   return (
     <>
@@ -109,6 +112,8 @@ export default function Home() {
     </>
   );
 }
+
+
 
 const IntrosubBox = styled.div`
   display: flex;

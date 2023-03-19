@@ -4,9 +4,33 @@ import Link from "next/link";
 import styled from "styled-components";
 import Image from "next/image";
 import Login from "../components/Login";
-import Signup from "../components/Signup"
+import Signup from "../components/Signup";
+import React, { useEffect, useState } from "react";
+import Logout from "@/components/Logout";
 
 export default function App({ Component, pageProps }: AppProps) {
+
+  
+  const confromLogin = async () => {
+    const res = await fetch(`https://mintalk.duckdns.org/sign-in/clients`, {
+      method: "GET",
+      mode: "cors",
+      cache: "default",
+    });
+    const data = await res.json();
+    return data.data;
+  };
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const reviews = await confromLogin();
+    };
+    fetchData();
+  }, []);
+    
+    
+  
+
   return (
     <>
       <Head>
@@ -31,8 +55,14 @@ export default function App({ Component, pageProps }: AppProps) {
             </div>
           </Menu>
           <LoginNav>
-            <Login />
-            <Signup />
+            {/* {loginToken ? (
+              <Logout />
+            ) : (
+              <>
+                <Login />
+                <Signup />
+              </>
+            )} */}
           </LoginNav>
         </Headerbox>
       </Head>
@@ -40,6 +70,7 @@ export default function App({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
 
 const Head = styled.div`
   display: flex;
