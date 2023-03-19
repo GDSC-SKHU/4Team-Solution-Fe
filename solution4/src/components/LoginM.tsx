@@ -1,8 +1,9 @@
 // import axios from "axios";
 // import { METHODS } from "http";
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import styled from "styled-components";
+import LoginContext,{RoleContext}  from "./LoginContext";
 // import Checkbox from "./Checkbox";
 
 export default function LoginM() {
@@ -10,6 +11,11 @@ export default function LoginM() {
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  
+  const { isLogin, setIsLogin } = useContext(LoginContext);
+  //로그인 성공 여부
+  const { role, setRole } = useContext(RoleContext);
+
 
   const data = { email: username, password: password };
   const onFinish = (e: FormEvent<HTMLFormElement>) => {
@@ -26,23 +32,20 @@ export default function LoginM() {
       //실제 데이터 파싱하여 body에 저장
       credentials: `include`,
     })
-      // .then((res) => res.json()) //이것이 필요한 것인가?
-      //
-      // .then((res) => {
-      //   console.log(res);
-      //   router.push("/");
-      // })
+      .then((res) => res.json()) //이것이 필요한 것인가?
       .then((res) => {
-        console.log('res', res.headers,res.headers.get('Set-Cookie'));
-        
-        res;
+        setRole(res.userStatus["role"])
+        setIsLogin(true);
         router.push("/");
       })
       .catch((error) => {
-        console.log(error);
+        setIsLogin(false);
       });
-  };
-
+    };
+    
+    console.log(role);
+    console.log(isLogin);
+    
   return (
     <LoginBoxM onSubmit={onFinish}>
       <MemberType>내담자</MemberType>

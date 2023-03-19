@@ -5,72 +5,57 @@ import styled from "styled-components";
 import Image from "next/image";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Logout from "@/components/Logout";
+import LoginContext, {RoleContext} from "@/components/LoginContext";
+import Mypage from "@/components/Mypage";
 
 export default function App({ Component, pageProps }: AppProps) {
-
-  
-  const confromLogin = async () => {
-    const res = await fetch(`https://mintalk.duckdns.org/sign-in/clients`, {
-      method: "GET",
-      mode: "cors",
-      cache: "default",
-    });
-    const data = await res.json();
-    return data.data;
-  };
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      const reviews = await confromLogin();
-    };
-    fetchData();
-  }, []);
-    
-    
-  
-
+  const [isLogin, setIsLogin] = useState(false);
+  const [role, setRole] = useState("");
   return (
     <>
-      <Head>
-        <Link href="/">
-          <HomeLink>
-            <Image src="/minTalk.png" alt="logo" width={100} height={30} />
-          </HomeLink>
-        </Link>
-        <Headerbox>
-          <Menu>
-            <div>
-              <NavTxt href="/conSearch">상담 찾기</NavTxt>
-            </div>
-            <div>
-              <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>
-            </div>
-            <div>
-              <NavTxt href="/clientsConsultantPage">상담실 위치</NavTxt>
-            </div>
-            <div>
-              <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>
-            </div>
-          </Menu>
-          <LoginNav>
-            {/* {loginToken ? (
-              <Logout />
-            ) : (
-              <>
-                <Login />
-                <Signup />
-              </>
-            )} */}
-          </LoginNav>
-        </Headerbox>
-      </Head>
-      <Component {...pageProps} />
+      <LoginContext.Provider value={{ isLogin, setIsLogin }}>
+        <RoleContext.Provider value={{role, setRole}}>
+        <Head>
+          <Link href="/">
+            <HomeLink>
+              <Image src="/minTalk.png" alt="logo" width={100} height={30} />
+            </HomeLink>
+          </Link>
+          <Headerbox>
+            <Menu>
+              <div>
+                <NavTxt href="/conSearch">상담사 목록</NavTxt>
+              </div>
+              <div>
+                <NavTxt href="/consultantsMypage">자가테스트</NavTxt>
+              </div>
+              <div>
+                <NavTxt href="/clientsConsultantPage">소통의 공간</NavTxt>
+              </div>
+            </Menu>
+            <LoginNav>
+              {isLogin ? (
+                <>
+                <Logout />
+                <Mypage />
+                </>
+              ) : (
+                <>
+                  <Login />
+                  <Signup />
+                </>
+              )}
+            </LoginNav>
+          </Headerbox>
+        </Head>
+        <Component {...pageProps} />
+        </RoleContext.Provider>
+      </LoginContext.Provider>
     </>
   );
 }
-
 
 const Head = styled.div`
   display: flex;

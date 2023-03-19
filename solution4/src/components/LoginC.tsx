@@ -1,8 +1,9 @@
 // import axios from "axios";
 // import { METHODS } from "http";
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import styled from "styled-components";
+import LoginContext, { RoleContext } from "./LoginContext";
 // import Checkbox from "./Checkbox";
 
 export default function LoginC() {
@@ -10,6 +11,10 @@ export default function LoginC() {
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const { isLogin, setIsLogin } = useContext(LoginContext);
+  //로그인 성공 여부
+  const { role, setRole } = useContext(RoleContext);
 
   const data = { email: username, password: password };
   const onFinish = (e: FormEvent<HTMLFormElement>) => {
@@ -26,20 +31,19 @@ export default function LoginC() {
       //실제 데이터 파싱하여 body에 저장
       credentials: `include`,
     })
-      // .then((res) => res.json()) //이것이 필요한 것인가?
-      //
-      // .then((res) => {
-      //   console.log(res);
-      //   router.push("/");
-      // })
+      .then((res) => res.json()) //이것이 필요한 것인가?
       .then((res) => {
-        res;
+        setRole(res.userStatus["role"]);
+        setIsLogin(true);
         router.push("/");
       })
       .catch((error) => {
-        console.log(error);
+        setIsLogin(false);
       });
   };
+
+  console.log(role);
+  console.log(isLogin);
 
   return (
     <LoginBoxC onSubmit={onFinish}>
@@ -77,14 +81,14 @@ const LoginBoxC = styled.form`
 `;
 
 const MemberType = styled.p`
- padding-right: 12rem;
- padding-bottom: 2rem;
+  padding-right: 12rem;
+  padding-bottom: 2rem;
 
- font-size: 2rem;
- font-weight: 600;
- 
- color: gray;
-`
+  font-size: 2rem;
+  font-weight: 600;
+
+  color: gray;
+`;
 
 const InputBox = styled.div`
   display: grid;
@@ -93,7 +97,6 @@ const InputBox = styled.div`
 
   gap: 1rem;
 `;
-
 
 const EmailBox = styled.input`
   width: 12rem;

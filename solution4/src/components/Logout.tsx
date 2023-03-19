@@ -1,10 +1,37 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styled from "styled-components";
+import { useContext } from 'react';
+import LoginContext from './LoginContext';
 
 export default function Login() {
+  const { setIsLogin } = useContext(LoginContext);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    setIsLogin(false);
+  }
+  const logout = async () => {
+    fetch("https://mintalk.duckdns.org/sign-out", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        handleLogout();
+        router.push("/");
+        console.log(res);
+      }).catch((error) => {alert("로그아웃 실패");});
+  };
   return (
     <>
-      <NavTxt href="/">로그아웃</NavTxt>
+      <form>
+        <NavTxt href="/">
+          <button onClick={logout}>로그아웃</button>
+        </NavTxt>
+      </form>
     </>
   );
 }
