@@ -65,56 +65,62 @@ function Search(props: SearchProps) {
 
   return (
     <SearchForm onSubmit={handleSearch}>
-      Gender
-      <Gender>
-        <CheckBox
-          label="Male"
-          value="male"
-          checked={gender.includes("male")}
-          onChange={handleGenderChange}
-        />
-        <CheckBox
-          label="Female"
-          value="female"
-          checked={gender.includes("female")}
-          onChange={handleGenderChange}
-        />
-      </Gender>
-      Field
-      <Field>
-        <CheckBox
-          label="Elder"
-          value="elder"
-          checked={field.includes("elder")}
-          onChange={handleFieldChange}
-        />
-        <CheckBox
-          label="Depression"
-          value="depression"
-          checked={field.includes("depression")}
-          onChange={handleFieldChange}
-        />
-        <CheckBox
-          label="Relationship"
-          value="relationship"
-          checked={field.includes("relationship")}
-          onChange={handleFieldChange}
-        />
-        <CheckBox
-          label="Youth"
-          value="youth"
-          checked={field.includes("youth")}
-          onChange={handleFieldChange}
-        />
-        <CheckBox
-          label="Anxiety"
-          value="anxiety"
-          checked={field.includes("anxiety")}
-          onChange={handleFieldChange}
-        />
-      </Field>
-      <button onClick={reset}>초기화</button>
-      <button>검색</button>
+      <Group>
+        <StyledP>Gender</StyledP>
+        <Gender>
+          <CheckBox
+            label="Male"
+            value="male"
+            checked={gender.includes("male")}
+            onChange={handleGenderChange}
+          />
+          <CheckBox
+            label="Female"
+            value="female"
+            checked={gender.includes("female")}
+            onChange={handleGenderChange}
+          />
+        </Gender>
+      </Group>
+      <Group>
+        <StyledP>Field</StyledP>
+        <Field>
+          <CheckBox
+            label="Elder"
+            value="elder"
+            checked={field.includes("elder")}
+            onChange={handleFieldChange}
+          />
+          <CheckBox
+            label="Depression"
+            value="depression"
+            checked={field.includes("depression")}
+            onChange={handleFieldChange}
+          />
+          <CheckBox
+            label="Relationship"
+            value="relationship"
+            checked={field.includes("relationship")}
+            onChange={handleFieldChange}
+          />
+          <CheckBox
+            label="Youth"
+            value="youth"
+            checked={field.includes("youth")}
+            onChange={handleFieldChange}
+          />
+          <CheckBox
+            label="Anxiety"
+            value="anxiety"
+            checked={field.includes("anxiety")}
+            onChange={handleFieldChange}
+          />
+        </Field>
+      </Group>
+      <ButtonBox>
+        <Button onClick={reset}>초기화</Button>
+        <Button>검색</Button>
+      </ButtonBox>
     </SearchForm>
   );
 }
@@ -124,12 +130,38 @@ export default Search;
 const SearchForm = styled.form`
   display: flex;
   flex-direction: column;
+
+  width: 40.5rem;
+
+  gap: 1rem;
+`;
+const Group = styled.div``;
+
+const StyledP = styled.p`
+  font-size: 2rem;
+  font-weight: 700;
 `;
 
 const Gender = styled.div`
   display: flex;
+  gap: 0.5rem;
 `;
 
 const Field = styled.div`
   display: flex;
+  gap: 0.5rem;
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: right;
+  gap: 0.5rem;
+`;
+
+const Button = styled.button`
+  text-align: center;
+  width: 3rem;
+  height: 1.5rem;
+
+  background-color: white;
 `;

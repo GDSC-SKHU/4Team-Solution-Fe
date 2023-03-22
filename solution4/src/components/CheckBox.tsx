@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 interface CheckBoxProps {
   label: string;
   checked: boolean;
@@ -14,16 +16,31 @@ function CheckBox({ label, value, checked, onChange }: CheckBoxProps) {
   return (
     <div>
       <label>
-        {label}
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={handleChange}
-          value={value}
-        ></input>
+        <StyledP>
+          {label}
+          <StyledInput
+            type="checkbox"
+            checked={checked}
+            onChange={handleChange}
+            value={value}
+          />
+        </StyledP>
       </label>
     </div>
   );
 }
 
 export default CheckBox;
+
+const StyledP = styled.p`
+  font-size: 1rem;
+  font-weight: 500;
+`;
+
+const StyledInput = styled.input`
+  margin-left: 0.5rem;
+
+  display: inline-block;
+  border: 2px solid #bcbcbc;
+  cursor: pointer;
+`;

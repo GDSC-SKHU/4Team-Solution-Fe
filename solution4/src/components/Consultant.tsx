@@ -80,15 +80,12 @@ const List = (Prop: Props) => {
                   </div>
                   <Styledinformation>
                     <StyledSpan>{Record.name}</StyledSpan>
+                    <StyledP>소개: {Record.shortIntroduction}</StyledP>
+                    <StyledP>위치: {Record.location}</StyledP>
                     <StyledP>
-                      <br />
-                      소개: {Record.shortIntroduction}
-                    </StyledP>
-                    <StyledP>{Record.location}</StyledP>
-                    <StyledP>
-                      분야:
+                      분야
                       {Record.fields.map((f, h) => (
-                        <div key={h}>{f.desc}</div>
+                        <Field key={h}>{f.desc}</Field>
                       ))}
                     </StyledP>
                   </Styledinformation>
@@ -107,6 +104,8 @@ export default List;
 const Box = styled.div`
   display: flex;
   flex-direction: column;
+
+  gap: 2rem;
 `;
 
 const ConsultantBox = styled.section`
@@ -118,13 +117,12 @@ const ConsultantBox = styled.section`
 
 const Consultant = styled.div`
   padding: 1.5rem;
-  width: 25rem;
+  width: 38rem;
   height: 20rem;
 
-  border-radius: 5px;
+  border-radius: 15px;
 
   background-color: aliceblue;
-  /* border: 2px solid gray; */
 `;
 
 const StyledLink = styled(Link)`
@@ -136,31 +134,41 @@ const StyledGrid = styled.div`
   grid-template-columns: 12rem 15rem;
   grid-template-rows: 20rem;
 
-  /* background-color: pink; */
+  border-radius: 5px;
 `;
+
 const ImageWrap = styled.div`
-  width: 12rem;
+  width: 13rem;
   height: 20rem;
   background-color: white;
-  /* 
-  border: 2px solid gray; */
 `;
 
 const Styledinformation = styled.div`
   padding-left: 2rem;
-  padding-top: 1rem;
-  width: 12rem;
+  width: 26rem;
   height: 10rem;
-
-  /* background-color: #93daf6; */
 `;
 
 const StyledSpan = styled.span`
-  font-size: 2em;
+  margin-bottom: 0.6rem;
+
+  font-size: 2.1em;
   color: black;
 `;
 
 const StyledP = styled.div`
-  font-size: 15px;
+  font-size: 1.1em;
   color: gray;
+`;
+
+const Field = styled.div`
+  width: 5rem;
+  height: 2rem;
+  margin-top: 0.4rem;
+
+  text-align: center;
+
+  background-color: white;
+
+  border-radius: 5rem;
 `;
