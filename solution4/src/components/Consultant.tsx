@@ -26,6 +26,7 @@ const List = (Prop: Props) => {
   const [searchUrl, setSearchUrl] = useState<string>(
     "https://mintalk.duckdns.org/counselors"
   );
+  const [loading, setLoading] = useState<boolean>(true); //로딩 상태 추가
 
   num = Number(id);
 
@@ -34,6 +35,7 @@ const List = (Prop: Props) => {
   };
 
   const counselor = useCallback(async () => {
+    setLoading(true); // 로딩 중 상태 업데이트
     axios
       .get(`${searchUrl}`)
       .then((response) => {
@@ -41,6 +43,9 @@ const List = (Prop: Props) => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setLoading(false); // 로딩 상태 업데이트
       });
   }, [searchUrl]);
 
@@ -69,32 +74,36 @@ const List = (Prop: Props) => {
           </div>
         );
       })} */}
-      <StyledLink href="./clientsConsultantPage">
-        <ConsultantBox>
-          {data.map((Record, counselor) => {
-            return (
-              <Consultant key={counselor} onClick={() => setId(Record.id)}>
-                <StyledGrid>
-                  <div>
-                    <ImageWrap></ImageWrap>
-                  </div>
-                  <Styledinformation>
-                    <StyledSpan>{Record.name}</StyledSpan>
-                    <StyledP>소개: {Record.shortIntroduction}</StyledP>
-                    <StyledP>위치: {Record.location}</StyledP>
-                    <StyledP>
-                      분야
-                      {Record.fields.map((f, h) => (
-                        <Field key={h}>{f.desc}</Field>
-                      ))}
-                    </StyledP>
-                  </Styledinformation>
-                </StyledGrid>
-              </Consultant>
-            );
-          })}
-        </ConsultantBox>
-      </StyledLink>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <StyledLink href="./clientsConsultantPage">
+          <ConsultantBox>
+            {data.map((Record, counselor) => {
+              return (
+                <Consultant key={counselor} onClick={() => setId(Record.id)}>
+                  <StyledGrid>
+                    <div>
+                      <ImageWrap></ImageWrap>
+                    </div>
+                    <Styledinformation>
+                      <StyledSpan>{Record.name}</StyledSpan>
+                      <StyledP>소개: {Record.shortIntroduction}</StyledP>
+                      <StyledP>위치: {Record.location}</StyledP>
+                      <StyledP>
+                        분야
+                        {Record.fields.map((f, h) => (
+                          <Field key={h}>{f.desc}</Field>
+                        ))}
+                      </StyledP>
+                    </Styledinformation>
+                  </StyledGrid>
+                </Consultant>
+              );
+            })}
+          </ConsultantBox>
+        </StyledLink>
+      )}
     </Box>
   );
 };
