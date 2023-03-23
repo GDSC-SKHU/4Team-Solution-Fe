@@ -258,7 +258,7 @@ export default function ClientsConsultantPage({}) {
                             </div>
                             <p>익명</p>
                           </div>
-                          <p>{Review["content"]}명</p>
+                          <p>{Review["content"]}</p>
                         </UserBox>
                       </>
                     );

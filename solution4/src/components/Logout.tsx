@@ -46,4 +46,10 @@ export const NavTxt = styled(Link)`
     color: #0b1d00d0;
     transition: all 0.2s;
   }
+  &>button{
+    outline: none;
+    border: none;
+    background-color: white;
+    font-size: 1.2rem;
+  }
 `;

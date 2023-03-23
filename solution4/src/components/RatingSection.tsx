@@ -13,7 +13,7 @@ const RatingContainer = styled.div`
     color: #cfcfcf;
   }
   .active {
-    color: coral;
+    color: #83da00;
   }
 `;
 

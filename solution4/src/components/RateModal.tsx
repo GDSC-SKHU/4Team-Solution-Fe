@@ -85,17 +85,31 @@ export default function RateModal({ onClose }: RateModalProps) {
               <CiWarning size={25}/>
             </div>
           )}
-          <div>
-            <div>내가 작성한 후기</div>
-            <ul>
-              <li></li>
-            </ul>
-          </div>
+          <MyReviewBox>
+            <div className="BoxName">내가 작성한 후기</div>
+            <div>
+              
+            </div>
+          </MyReviewBox>
         </ReviewModal>
       </ModalBackground>
     </>
   );
 }
+const MyReviewBox = styled.div`
+  background-color: #ddffd4;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 15px;
+  .BoxName{
+    font-size: 1.2rem;
+  }
+`
 const StarZone = styled.div`
   display: flex;
   justify-content: center;
