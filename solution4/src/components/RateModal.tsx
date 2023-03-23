@@ -17,6 +17,8 @@ export default function RateModal({ onClose }: RateModalProps) {
   //댓글 없을때 알리기 위해
   const [viewAlert, setViewAlert] = useState(false);
 
+  const [commentList, setCommentList] = useState([]);
+
   const handleCommentChange = (e: any) => {
     setComment(e.target.value);
     setIsComment(!!e.target.value);
@@ -43,7 +45,7 @@ export default function RateModal({ onClose }: RateModalProps) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      console.log(data)
       // 데이터베이스에 저장된 후기 데이터 확인
     })
     .catch((error) => {
@@ -51,7 +53,7 @@ export default function RateModal({ onClose }: RateModalProps) {
     });
     // 서버로 보내기
 
-    onClose();
+    // onClose();
   };
   return (
     <>
@@ -83,6 +85,12 @@ export default function RateModal({ onClose }: RateModalProps) {
               <CiWarning size={25}/>
             </div>
           )}
+          <div>
+            <div>내가 작성한 후기</div>
+            <ul>
+              <li></li>
+            </ul>
+          </div>
         </ReviewModal>
       </ModalBackground>
     </>

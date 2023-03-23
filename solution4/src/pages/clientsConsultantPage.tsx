@@ -1,15 +1,35 @@
 import Image from "next/image";
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { FaStar, FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
+import { BsFillPinMapFill } from "react-icons/bs";
+import { VscArrowUp } from "react-icons/vsc";
 import Googlemaps from "@/components/Googlemaps";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { num } from "@/components/Consultant";
 import RateModal from "@/components/RateModal";
-
+import { RoleContext } from "@/components/LoginContext";
 
 export default function ClientsConsultantPage({}) {
+  const homeRef = useRef<HTMLDivElement>(null);
+  const topRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const reviewRef = useRef<HTMLDivElement>(null);
+  const Arraystar = [1, 2, 3, 4, 5];
+  const onHomeClick = () => {
+    homeRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  const onTopClick = () => {
+    topRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  const onMapClick = () => {
+    mapRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  const onReviewClick = () => {
+    reviewRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const [consultant, setConsultant] = useState<any>({});
   const [consultantReivews, setConsultantReivews] = useState([]);
   const [career, setCareer] = useState([]);
@@ -17,10 +37,22 @@ export default function ClientsConsultantPage({}) {
   const [location, setLocation] = useState("");
   const [allRate, setAllRate] = useState<number>(0);
   const [reivewModal, setReviewModal] = useState(false);
+
   const handleCloseModal = () => {
-    // 모달을 닫을 때 수행할 로직
     setReviewModal(false);
   };
+  // 모달을 닫을 때 수행할 로직
+  const handleOpenModal = () => {
+    {
+      role === "CLIENT"
+        ? setReviewModal((prev) => !prev)
+        : alert("내담자만 리뷰 등록이 가능합니다.");
+    }
+  };
+  //모달 열 때 수행할 로직
+  const { role, setRole } = useContext(RoleContext);
+  //내담자가 아니면 modal을 열 수 없게 적용
+
   const calculateRate = () => {
     let sum = 0;
     for (let i = 0; i < consultantReivews.length; i++) {
@@ -62,10 +94,11 @@ export default function ClientsConsultantPage({}) {
         });
       });
   }, []);
-
+  console.log(typeof allRate);
+  console.log(allRate);
   return (
     <>
-      <FindpsyPage>
+      <FindpsyPage ref={topRef}>
         <>
           <ProfileBox>
             <ProfileImg>
@@ -73,30 +106,41 @@ export default function ClientsConsultantPage({}) {
                 className={consultant?.name}
                 src={consultant?.profileImageUrl}
                 alt="Picture of the author"
-                width={300}
-                height={300}
+                width={400}
+                height={400}
               />
             </ProfileImg>
             <ProfileTextBox>
               <ConsultantName>{consultant?.name} 상담사</ConsultantName>
               <StarBox>
-                <div>평점</div>
-                <div
-                  style={{
-                    width: `130px`,
-                    color: "#ffa352",
-                    height: "2rem",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  {[1, 2, 3, 4, 5].map((el) => (
-                    <div key={el}>
-                      <FaStar />
+                {allRate !== 0 ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        margin: "0px 10px",
+                        color: "#ffa352",
+                        height: "2rem",
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <RatingContainer>
+                        <FaStar size={25} />
+                      </RatingContainer>
                     </div>
-                  ))}
-                </div>
-                {/* <span>{consultantReivews[0]["rate"]}점</span> */}
+                    {allRate}점
+                  </div>
+                ) : (
+                  <p style={{ color: "#cccc" }}>
+                    아직 평균점수가 존재하지 않습니다.
+                  </p>
+                )}
               </StarBox>
               <ReviewBox>
                 <span>
@@ -105,40 +149,38 @@ export default function ClientsConsultantPage({}) {
                 {consultantReivews?.length > 0 ? (
                   <div>{consultantReivews[0]["content"]}</div>
                 ) : (
-                  <div></div>
+                  <div style={{ color: "#cccc" }}>
+                    아직 후기가 존재하지 않습니다.
+                  </div>
                 )}
                 <div></div>
               </ReviewBox>
               <IntroBox>
-                <div>
-                  <FaQuoteLeft />
-                </div>
                 <p>{consultant?.shortIntroduction}</p>
-                <div>
-                  <FaQuoteRight />
-                </div>
               </IntroBox>
             </ProfileTextBox>
           </ProfileBox>
 
           <SubMenuBox>
-            <div id="intro">상담사 소개</div>
-            <div id="map">병원 위치</div>
-            <div id="review">후기</div>
+            <div onClick={onHomeClick}>상담사 소개</div>
+            <div onClick={onMapClick}>병원 위치</div>
+            <div onClick={onReviewClick}>후기</div>
           </SubMenuBox>
-          <MainBox>
-            <HeadBox>
-              <div>
+          <Main ref={homeRef}>
+            <IntroMain>
+              <HeadBox id="a">
                 <div>
-                  <FaQuoteLeft />
+                  <div>
+                    <FaQuoteLeft />
+                  </div>
+                  {consultant?.shortIntroduction}
+                  <div>
+                    <FaQuoteRight />
+                  </div>
                 </div>
-                {consultant?.shortIntroduction}
-                <div>
-                  <FaQuoteRight />
-                </div>
-              </div>
-            </HeadBox>
-            <HeadSubBox>{consultant?.introduction}</HeadSubBox>
+              </HeadBox>
+              <HeadSubBox>{consultant?.introduction}</HeadSubBox>
+            </IntroMain>
             <HrLine />
             <CareerTotalBox>
               <FieldBox>
@@ -167,63 +209,69 @@ export default function ClientsConsultantPage({}) {
               </FieldBox>
             </CareerTotalBox>
             <HrLine />
-            <HospitalBox>
-              <CareerBoxHeader># 병원 위치</CareerBoxHeader>
+            <HospitalBox ref={mapRef}>
+              <CareerBoxHeader>
+                <div>
+                  <BsFillPinMapFill />
+                </div>
+                병원 위치
+              </CareerBoxHeader>
               <span>{location}</span>
               <HospitalImage>
                 <Googlemaps />
               </HospitalImage>
             </HospitalBox>
             <HrLine />
-            <ReviewMainBox>
-              <CareerBoxHeader># 후기</CareerBoxHeader>
+            {consultantReivews?.length !== 0 ? (
+              <>
+                <ReviewMainBox ref={reviewRef}>
+                  <CareerBoxHeader># 후기</CareerBoxHeader>
 
-              <RateBox>
-                <p>{consultantReivews?.length}명의 평가</p>
-                <div
-                  style={{
-                    width: `130px`,
-                    color: "#ffa352",
-                    height: "2rem",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  {[1, 2, 3, 4, 5].map((el) => (
-                    <div key={el}>
-                      <FaStar />
-                    </div>
-                  ))}
-                </div>
-                <div>{allRate}점</div>
-              </RateBox>
-            </ReviewMainBox>
-            <UserList>
-              {consultantReivews?.map((Review) => {
-                return (
-                  <>
-                    <UserBox>
-                      <div>
-                        <div>
-                          <AiOutlineUser size={25} />
+                  <RateBox>
+                    <p>{consultantReivews?.length}명의 평가</p>
+                    <div
+                      style={{
+                        width: `130px`,
+                        color: "#ffa352",
+                        height: "2rem",
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {[1, 2, 3, 4, 5].map((el) => (
+                        <div key={el}>
+                          <FaStar />
                         </div>
-                        <p>익명</p>
-                      </div>
-                      <p>{Review["content"]}명</p>
-                    </UserBox>
-                  </>
-                );
-              })}
-              {consultantReivews.length === 0 ? (
-                <p>아직 후기가 존재하지 않습니다..</p>
-              ) : (
-                <></>
-              )}
-            </UserList>
+                      ))}
+                    </div>
+                    <div>{allRate}점</div>
+                  </RateBox>
+                </ReviewMainBox>
+                <UserList>
+                  {consultantReivews?.map((Review) => {
+                    return (
+                      <>
+                        <UserBox>
+                          <div>
+                            <div>
+                              <AiOutlineUser size={25} />
+                            </div>
+                            <p>익명</p>
+                          </div>
+                          <p>{Review["content"]}명</p>
+                        </UserBox>
+                      </>
+                    );
+                  })}
+                </UserList>
+              </>
+            ) : (
+              <></>
+            )}
 
             <LottieBox
               onClick={() => {
-                setReviewModal((prev) => !prev);
+                handleOpenModal();
               }}
             >
               <div>
@@ -238,13 +286,48 @@ export default function ClientsConsultantPage({}) {
               </div>
             </LottieBox>
             {reivewModal ? <RateModal onClose={handleCloseModal} /> : <></>}
-          </MainBox>
+          </Main>
+          <UpBtn onClick={onTopClick}>
+            <VscArrowUp size={20} />
+          </UpBtn>
         </>
       </FindpsyPage>
     </>
   );
 }
+const IntroMain = styled.div`
+  width: 100%;
+`;
+const RatingContainer = styled.div`
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin: 13px 0px;
+  .inactive {
+    color: #cfcfcf;
+  }
+  .active {
+    color: coral;
+  }
+`;
 
+const UpBtn = styled.button`
+  color: #009809;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  position: fixed;
+  right: 4rem;
+  bottom: 2rem;
+  box-shadow: 0px 5px 8px #d6d6d6;
+  border: none;
+  background-color: #e8ffe3;
+`;
 const UserBox = styled.div`
   display: flex;
   align-items: center;
@@ -269,13 +352,14 @@ const UserList = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
-  width: 60%;
+
   height: 20rem;
   padding: 3rem;
-  background-color: #ebebeb;
+  background-color: #00dc073d;
   overflow: scroll;
+  border-radius: 15px;
 `;
 const RateBox = styled.div`
   display: flex;
@@ -307,6 +391,7 @@ const CareerTotalBox = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin: 5rem 0px;
 `;
 const FieldBox = styled.div`
   height: 15rem;
@@ -331,20 +416,26 @@ const FieldBox = styled.div`
   }
 `;
 const CareerBoxHeader = styled.div`
+  & > div {
+    color: #229d00;
+    margin-right: 5px;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.5rem;
   font-weight: bolder;
 `;
 
 const HrLine = styled.div`
-  width: 80%;
   background-color: #b4b4b4;
   height: 1px;
-  margin: 5rem auto;
+  margin: 4rem 0px;
 `;
 const HeadSubBox = styled.div`
-  width: 51%;
   margin: auto;
   font-size: 1.2rem;
+  width: fit-content;
 `;
 const HeadBox = styled.div`
   width: 100%;
@@ -366,9 +457,7 @@ const HeadBox = styled.div`
     }
   }
 `;
-const MainBox = styled.div`
-  width: 60%;
-`;
+
 const IntroBox = styled.div`
   display: flex;
   gap: 5px;
@@ -378,6 +467,10 @@ const IntroBox = styled.div`
   margin-bottom: 1rem;
   & > p {
     color: black;
+    font-size: 1.3rem;
+    background-color: #0ed20081;
+    border-radius: 15px;
+    padding: 10px;
   }
   & > div {
     color: #ffa352;
@@ -387,6 +480,7 @@ const ReviewBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   gap: 5px;
   margin: 1rem 0px;
   height: 5rem;
@@ -395,7 +489,6 @@ const ReviewBox = styled.div`
   }
   & > span {
     height: 2rem;
-    background-color: #ff5151;
   }
 
   & > div > span {
@@ -411,22 +504,15 @@ const FindpsyPage = styled.div`
 const ProfileBox = styled.div`
   display: flex;
   justify-content: center;
-  width: 60%;
-  height: 40%;
 `;
 const ProfileTextBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2rem;
-  margin-left: 2rem;
+  width: 35rem;
   font-size: 1.2rem;
-  height: 40%;
-  background-color: antiquewhite;
   padding: 2rem;
-  width: 50%;
-  border-radius: 15px;
 `;
 const ConsultantName = styled.div`
   height: 2rem;
@@ -451,7 +537,7 @@ const SubMenuBox = styled.div`
   height: 3rem;
   justify-content: center;
   width: 60%;
-  background-color: white;
+
   margin-bottom: 1rem;
   border-bottom: 1px solid black;
   border-top: 1px solid black;
@@ -472,7 +558,6 @@ const ProfileImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 2rem;
 `;
 
 const LottieBox = styled.div`
@@ -499,4 +584,7 @@ const LottieBox = styled.div`
     }
   }
   margin: 1rem auto 3rem;
+`;
+const Main = styled.div`
+  width: 60%;
 `;

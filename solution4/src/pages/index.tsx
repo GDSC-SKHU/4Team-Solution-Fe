@@ -20,6 +20,7 @@ import {
   ZoomIn,
   ZoomOut,
 } from "react-scroll-motion";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 export default function Home() {
   // const animatedItem = useScrollFadeIn();
@@ -35,7 +36,7 @@ export default function Home() {
     const data = await res.json();
     return data.data;
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       const reviews = await postReview();
@@ -43,17 +44,23 @@ export default function Home() {
     };
     fetchData();
   }, []);
-  
 
   // console.log('?',topReviews);
   //! 이게 6번이나 찍히는 이유는 랜더링을 할때마다 실행하기 때문인데 이 횟수가 많아질 수록 불리하다.
   // 랜더링 횟수를 줄이는 방법은 상태 변경 등의 사항을 줄이는 것.
-  
+
   return (
     <>
       <MainBox>
         <ServicePosterBox>
           <Poster>
+                <Player
+                  autoplay
+                  loop
+                  speed={0.9}
+                  src="https://assets6.lottiefiles.com/packages/lf20_vmdlqsp1.json"
+                  style={{ height: "20rem", width: "30rem" }}
+                />
             <div>
               <PostTextBox>
                 <span>from minTalk</span>
@@ -112,8 +119,6 @@ export default function Home() {
     </>
   );
 }
-
-
 
 const IntrosubBox = styled.div`
   display: flex;
@@ -197,7 +202,7 @@ const ServiceBox = styled.div`
   align-items: center;
   width: 100%;
   padding-bottom: 3rem;
-  background-color: #e4ffd2;
+  background-color: #e4ffeb;
   & > span {
     font-size: 2rem;
     font-family: "Courier New", Courier, monospace;
@@ -242,12 +247,13 @@ const Anony = styled.div`
 const ListBox = styled.span`
   display: flex;
   margin: 2rem 1rem;
+  padding: 13px;
   width: 90%;
   height: 100%;
   justify-content: center;
   align-items: center;
   background-color: #2ecf347a;
-  border-radius: 10px;
+
   & > div {
     font-size: 1.2rem;
   }
@@ -270,24 +276,24 @@ const IntroduceBox = styled.div`
 `;
 
 const Poster = styled.div`
-  width: 100%;
+  width: 60%;
   margin: auto;
   height: 45rem;
   display: flex;
-  color: white;
+  padding-top: 3rem;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-image: url("/stressguy.jpeg");
+
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
-  &>div{
+  & > div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 10%;
+
   }
 `;
 const ServicePosterBox = styled.div`
@@ -304,4 +310,5 @@ const MainBox = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background-color: #e4ffeb;
 `;
