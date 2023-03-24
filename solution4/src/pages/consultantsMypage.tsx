@@ -5,6 +5,7 @@ import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import { FaStar, FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import { fieldList, careerlist } from "../constants";
+import PhotoUpload from "@/components/PhotoUpload";
 
 export default function ConsultantsMypage() {
   const [consultant, setConsultant] = useState<any>({});
@@ -103,6 +104,7 @@ export default function ConsultantsMypage() {
         <p>경력</p>
         <input></input>
       </div>
+      <PhotoUpload />
     </ConMypageMain>
   );
 }
