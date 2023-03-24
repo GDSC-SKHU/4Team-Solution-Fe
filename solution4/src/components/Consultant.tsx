@@ -1,3 +1,4 @@
+import Image from "next/image";
 import axios from "axios";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
@@ -10,6 +11,7 @@ interface Record {
   shortIntroduction: string;
   location: string;
   fields: [{ desc: string }];
+  profileImageUrl: string;
 }
 
 interface Props {
@@ -84,7 +86,14 @@ const List = (Prop: Props) => {
                 <Consultant key={counselor} onClick={() => setId(Record.id)}>
                   <StyledGrid>
                     <div>
-                      <ImageWrap></ImageWrap>
+                      <ImageWrap>
+                        <Image
+                          src={Record.profileImageUrl}
+                          width={192}
+                          height={320}
+                          alt="상담사 사진"
+                        />
+                      </ImageWrap>
                     </div>
                     <Styledinformation>
                       <StyledSpan>{Record.name}</StyledSpan>
@@ -149,7 +158,6 @@ const StyledGrid = styled.div`
 const ImageWrap = styled.div`
   width: 13rem;
   height: 20rem;
-  background-color: white;
 `;
 
 const Styledinformation = styled.div`
