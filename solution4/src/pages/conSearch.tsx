@@ -57,7 +57,7 @@ export default function Findpsy({
 }
 
 const Container = styled.div`
-  margin-top: 6rem;
+  margin-top: 3rem;
   margin-bottom: 2rem;
 
   display: flex;
