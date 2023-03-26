@@ -131,7 +131,7 @@ const SearchForm = styled.form`
   display: flex;
   flex-direction: column;
 
-  width: 40.5rem;
+  width: 44rem;
 
   gap: 1rem;
 `;

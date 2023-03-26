@@ -96,7 +96,7 @@ const List = (Prop: Props) => {
                         <ImageWrap>
                           <Image
                             src={Record.profileImageUrl}
-                            width={192}
+                            width={240}
                             height={320}
                             alt="상담사 사진"
                           />
@@ -146,7 +146,7 @@ const ConsultantBox = styled.section`
 
 const Consultant = styled.div`
   padding: 1.5rem;
-  width: 38rem;
+  width: 41rem;
   height: 20rem;
 
   border-radius: 15px;
@@ -160,14 +160,14 @@ const StyledLink = styled(Link)`
 
 const StyledGrid = styled.div`
   display: grid;
-  grid-template-columns: 12rem 15rem;
+  grid-template-columns: 15rem 15rem;
   grid-template-rows: 20rem;
 
   border-radius: 5px;
 `;
 
 const ImageWrap = styled.div`
-  width: 13rem;
+  width: 15rem;
   height: 20rem;
 `;
 
