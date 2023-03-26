@@ -1,9 +1,10 @@
 import Image from "next/image";
 import axios from "axios";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Search from "./CheckBoxSearch";
+import { VscArrowUp } from "react-icons/vsc";
 
 interface Record {
   id: number;
@@ -29,8 +30,11 @@ const List = (Prop: Props) => {
     "https://mintalk.duckdns.org/counselors"
   );
   const [loading, setLoading] = useState<boolean>(true); //로딩 상태 추가
+  const topRef = useRef<HTMLDivElement>(null);
 
-  num = Number(id);
+  const onTopClick = () => {
+    topRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const handleSearchUrlChange = (newUrl: string) => {
     setSearchUrl(newUrl);
@@ -55,10 +59,11 @@ const List = (Prop: Props) => {
     counselor();
   }, [counselor, searchUrl]);
 
+  num = Number(id);
   console.log(num);
-  // };
+
   return (
-    <Box>
+    <Box ref={topRef}>
       <Search
         setSearchUrl={setSearchUrl}
         searchUrl={searchUrl}
@@ -114,6 +119,9 @@ const List = (Prop: Props) => {
               })}
             </ConsultantBox>
           </StyledLink>
+          <UpBtn onClick={onTopClick}>
+            <VscArrowUp size={30} />
+          </UpBtn>
         </>
       )}
     </Box>
@@ -197,4 +205,21 @@ const ResultNum = styled.p`
   font-size: 1.5rem;
   color: gray;
   margin-bottom: 1rem;
+`;
+
+const UpBtn = styled.button`
+  color: #85d3f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 40px;
+  position: fixed;
+  right: 7rem;
+  bottom: 2rem;
+  box-shadow: 0px 5px 8px #d6d6d6;
+  border: none;
+  background-color: aliceblue;
 `;
