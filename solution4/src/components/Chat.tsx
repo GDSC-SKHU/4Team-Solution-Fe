@@ -18,12 +18,13 @@ export default function Chat() {
     <Container>
       <ChatBox>
         <Who>누구랑</Who>
-        <HR></HR>
+        <HR/>
         <MainChat>
           {messages.map((message, index) => (
             <Bubble key={index}>{message}</Bubble>
           ))}
         </MainChat>
+               <HR/>
         <SubmitBox>
           <SubmitInput
             value={newMessage}
@@ -60,7 +61,7 @@ const Who = styled.div`
   margin-left: 3rem;
   margin-top: 2vh;
 
-  height: 4vh;
+  height: 8vh;
 
   color: green;
 
@@ -69,7 +70,7 @@ const Who = styled.div`
 `;
 
 const HR = styled.hr`
-  margin-top: 4vh;
+  /* margin-top: 4vh; */
 
   width: 50rem;
   height: 3px;
@@ -93,7 +94,7 @@ const Bubble = styled.div`
   margin-top: 1rem;
   margin-bottom: 1rem;
 
-  width: 17.5rem;
+  width: 16.5rem;
   height: auto;
 
   background-color: white;
@@ -107,6 +108,7 @@ const Bubble = styled.div`
 `;
 
 const SubmitBox = styled.div`
+  padding-top: 2vh;
   margin-bottom: 2vh;
 
   display: flex;
