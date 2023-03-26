@@ -1,2 +1,1 @@
-# 4Team-Solution-Fe
-4team
+### MinTalk ReadMe
