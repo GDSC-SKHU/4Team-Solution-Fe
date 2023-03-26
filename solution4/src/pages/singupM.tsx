@@ -46,7 +46,7 @@ export default function SignupC() {
         router.push("/login");
       })
       .catch((error) => {
-        if (error.response.status === 409) {
+        if (error.response?.status === 409) {
           alert("이미 존재하는 내담자 이메일입니다.");
         }
       });

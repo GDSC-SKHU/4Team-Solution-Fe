@@ -19,7 +19,6 @@ export default function Login() {
 
       if (response.ok) {
         Cookies.remove("role");
-        Cookies.remove("password");
         Cookies.remove("loggedIn");
         router.push("/");
       } else {
