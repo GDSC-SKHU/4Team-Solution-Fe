@@ -50,6 +50,7 @@ export default function LoginC() {
         ></EmailBox>
         <p>비밀번호</p>
         <PasswordBox
+          type="password"
           placeholder="password"
           onChange={(e) => {
             setPassword(e.target.value);

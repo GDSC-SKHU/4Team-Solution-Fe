@@ -8,17 +8,14 @@ import Cookies from "js-cookie";
 export default function LoginM() {
   const router = useRouter();
 
-
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  
-
 
   const data = { email: username, password: password };
 
   const onFinish = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
     fetch("https://mintalk.duckdns.org/sign-in/clients", {
       method: "POST",
       headers: {
@@ -34,11 +31,10 @@ export default function LoginM() {
         router.push("/");
       })
       .catch((error) => {
-        alert('로그인에 실패하였습니다.')
+        alert("로그인에 실패하였습니다.");
       });
   };
 
-    
   return (
     <LoginBoxM onSubmit={onFinish}>
       <MemberType>내담자</MemberType>
@@ -52,6 +48,7 @@ export default function LoginM() {
         ></EmailBox>
         <p>비밀번호</p>
         <PasswordBox
+          type="password"
           placeholder="password"
           onChange={(e) => {
             setPassword(e.target.value);
