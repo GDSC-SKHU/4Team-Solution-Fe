@@ -151,7 +151,7 @@ const Consultant = styled.div`
 
   border-radius: 15px;
 
-  background-color: aliceblue;
+  background-color: #e4ffeb;
 `;
 
 const StyledLink = styled(Link)`
@@ -208,7 +208,7 @@ const ResultNum = styled.p`
 `;
 
 const UpBtn = styled.button`
-  color: #85d3f7;
+  color: #009809;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -221,5 +221,5 @@ const UpBtn = styled.button`
   bottom: 2rem;
   box-shadow: 0px 5px 8px #d6d6d6;
   border: none;
-  background-color: aliceblue;
+  background-color: #e8ffe3;
 `;
