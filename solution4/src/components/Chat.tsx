@@ -18,13 +18,15 @@ export default function Chat() {
     <Container>
       <ChatBox>
         <Who>누구랑</Who>
-        <HR/>
+        <HR />
         <MainChat>
           {messages.map((message, index) => (
-            <Bubble key={index}>{message}</Bubble>
+            <Bubble length={message.length} key={index}>
+              {message}
+            </Bubble>
           ))}
         </MainChat>
-               <HR/>
+        <HR />
         <SubmitBox>
           <SubmitInput
             value={newMessage}
@@ -37,11 +39,14 @@ export default function Chat() {
     </Container>
   );
 }
+
+interface BubbleProps {
+  length: number;
+}
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
-
-  background-color: #9bd58b;
 `;
 
 const ChatBox = styled.div`
@@ -52,7 +57,7 @@ const ChatBox = styled.div`
   width: 50rem;
   height: 100vh;
 
-  background-color: beige;
+  background-color: #e8ffe3;
   /* border-left: solid 1px #ddd36e;
   border-right: solid 1px #ddd36e; */
 `;
@@ -63,7 +68,7 @@ const Who = styled.div`
 
   height: 8vh;
 
-  color: green;
+  color: black;
 
   font-size: 2em;
   font-weight: 600;
@@ -87,14 +92,15 @@ const MainChat = styled.div`
   overflow-y: scroll;
 `;
 
-const Bubble = styled.div`
+const Bubble = styled.div<BubbleProps>`
   padding: 2rem;
   margin-left: auto;
   margin-right: 2.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 
-  width: 16.5rem;
+  width: ${({ length }) => (length <= 20 ? `${length}rem` : "16.5rem")};
+  max-width: 16.5rem;
   height: auto;
 
   background-color: white;
@@ -102,7 +108,7 @@ const Bubble = styled.div`
   border: none;
   border-radius: 2rem;
 
-  text-align: center;
+  text-align: right;
 
   word-wrap: break-word; // 줄바꿈
 `;
@@ -125,7 +131,7 @@ const SubmitInput = styled.input`
   border-radius: 15px;
 
   text-align: right;
-  font-size: 1em;
+  font-size: 1.2em;
 
   &:focus {
     outline: none;
@@ -139,8 +145,8 @@ const Submit = styled.button`
   width: 5rem;
   height: 8.2vh;
 
-  background-color: yellow;
-  color: green;
+  background-color: #ffffe6;
+  color: #151414;
 
   border: none;
   border-radius: 15px;
