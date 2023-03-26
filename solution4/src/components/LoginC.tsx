@@ -26,14 +26,26 @@ export default function LoginC() {
       body: JSON.stringify(data),
       credentials: "include",
     })
-      .then((res) => res.json())
       .then((res) => {
-        Cookies.set("role", res.userStatus["role"]);
-        Cookies.set("loggedIn", res.userStatus["loggedIn"]);
+        if (res.status === 400) {
+          throw new Error("비밀번호가 일치하지 않습니다.");
+        } else {
+          return res.json();
+        }
+      })
+      .then((res) => {
+        if (res.userStatus && res.userStatus["role"]) {
+          Cookies.set("role", res.userStatus["role"]);
+        }
+        if (res.userStatus && res.userStatus["loggedIn"]) {
+          Cookies.set("loggedIn", res.userStatus["loggedIn"]);
+        }
         router.push("/");
       })
       .catch((error) => {
-        alert("로그인에 실패하였습니다.");
+        console.log(error);
+        // alert("로그인에 실패하였습니다.");
+        alert(error.message);
       });
   };
 
