@@ -79,39 +79,42 @@ const List = (Prop: Props) => {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <StyledLink href="./clientsConsultantPage">
-          <ConsultantBox>
-            {data.map((Record, counselor) => {
-              return (
-                <Consultant key={counselor} onClick={() => setId(Record.id)}>
-                  <StyledGrid>
-                    <div>
-                      <ImageWrap>
-                        <Image
-                          src={Record.profileImageUrl}
-                          width={192}
-                          height={320}
-                          alt="상담사 사진"
-                        />
-                      </ImageWrap>
-                    </div>
-                    <Styledinformation>
-                      <StyledSpan>{Record.name}</StyledSpan>
-                      <StyledP>소개: {Record.shortIntroduction}</StyledP>
-                      <StyledP>위치: {Record.location}</StyledP>
-                      <StyledP>
-                        분야
-                        {Record.fields.map((f, h) => (
-                          <Field key={h}>{f.desc}</Field>
-                        ))}
-                      </StyledP>
-                    </Styledinformation>
-                  </StyledGrid>
-                </Consultant>
-              );
-            })}
-          </ConsultantBox>
-        </StyledLink>
+        <>
+          <ResultNum>{data.length}명의 상담사가 검색되었습니다.</ResultNum>
+          <StyledLink href="./clientsConsultantPage">
+            <ConsultantBox>
+              {data.map((Record, counselor) => {
+                return (
+                  <Consultant key={counselor} onClick={() => setId(Record.id)}>
+                    <StyledGrid>
+                      <div>
+                        <ImageWrap>
+                          <Image
+                            src={Record.profileImageUrl}
+                            width={192}
+                            height={320}
+                            alt="상담사 사진"
+                          />
+                        </ImageWrap>
+                      </div>
+                      <Styledinformation>
+                        <StyledSpan>{Record.name}</StyledSpan>
+                        <StyledP>소개: {Record.shortIntroduction}</StyledP>
+                        <StyledP>위치: {Record.location}</StyledP>
+                        <StyledP>
+                          분야
+                          {Record.fields.map((f, h) => (
+                            <Field key={h}>{f.desc}</Field>
+                          ))}
+                        </StyledP>
+                      </Styledinformation>
+                    </StyledGrid>
+                  </Consultant>
+                );
+              })}
+            </ConsultantBox>
+          </StyledLink>
+        </>
       )}
     </Box>
   );
@@ -188,4 +191,10 @@ const Field = styled.div`
   background-color: white;
 
   border-radius: 5rem;
+`;
+
+const ResultNum = styled.p`
+  font-size: 1.5rem;
+  color: gray;
+  margin-bottom: 1rem;
 `;
