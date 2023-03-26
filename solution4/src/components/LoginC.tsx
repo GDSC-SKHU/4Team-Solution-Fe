@@ -28,7 +28,9 @@ export default function LoginC() {
     })
       .then((res) => {
         if (res.status === 400) {
-          throw new Error("비밀번호가 일치하지 않습니다.");
+          throw new Error("email과 password가 일치하지 않습니다");
+        } else if (res.status === 404) {
+          throw new Error("해당 email로 상담사를 찾을 수 없습니다.");
         } else {
           return res.json();
         }
