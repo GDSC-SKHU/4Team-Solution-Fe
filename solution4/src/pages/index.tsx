@@ -63,7 +63,7 @@ export default function Home() {
                 />
             <div>
               <PostTextBox>
-                <span>from minTalk</span>
+                <div className="From">from minTalk</div>
                 <p>당신의 스트레스는 괜찮은 상태인가요..?</p>
                 <div>How about measuring your stress?</div>
               </PostTextBox>
@@ -96,7 +96,7 @@ export default function Home() {
           </IntrosubBox>
         </IntroduceBox>
         <ServiceBox>
-          <span>Site Review</span>
+          <div className="siteReview">Site Review</div>
           <div>
             {topReviews.map((reviewlist) => {
               return (
@@ -168,7 +168,7 @@ const PostTextBox = styled.div`
     font-size: 3rem;
     font-weight: 600;
   }
-  & > span {
+  .From{
     font-size: 1.2rem;
     font-weight: 600;
   }
@@ -203,7 +203,7 @@ const ServiceBox = styled.div`
   width: 100%;
   padding-bottom: 3rem;
   background-color: #e4ffeb;
-  & > span {
+  .siteReview{
     font-size: 2rem;
     font-family: "Courier New", Courier, monospace;
     margin: 3rem;

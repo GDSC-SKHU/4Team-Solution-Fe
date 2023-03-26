@@ -1,13 +1,14 @@
+import Cookies from "js-cookie";
 import Link from "next/link";
-import { useContext } from "react";
 import styled from "styled-components";
-import { RoleContext } from "./LoginContext";
 
 export default function Mypage() {
-  const { role, setRole } = useContext(RoleContext);
+  
+  const Isrole = Cookies.get("role");
+  const IsloggedIn = Cookies.get("loggedIn");
   return (
     <div>
-      {role === "COUNSELOR" ? (
+      {Isrole === "COUNSELOR" ? (
         <>
           <MypageBtn href="/consultantsMypage">마이페이지</MypageBtn>
         </>

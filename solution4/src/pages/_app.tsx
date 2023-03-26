@@ -5,54 +5,51 @@ import styled from "styled-components";
 import Image from "next/image";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import Logout from "@/components/Logout";
-import LoginContext, {RoleContext} from "@/components/LoginContext";
 import Mypage from "@/components/Mypage";
+import Cookies from "js-cookie";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [isLogin, setIsLogin] = useState(false);
-  const [role, setRole] = useState("");
+  const Isrole = Cookies.get("role");
+  const IsloggedIn = Cookies.get("loggedIn");
+
   return (
     <>
-      <LoginContext.Provider value={{ isLogin, setIsLogin }}>
-        <RoleContext.Provider value={{role, setRole}}>
-        <Head>
+      <Head>
+        <HomeLink>
           <Link href="/">
-            <HomeLink>
-              <Image src="/minTalk.png" alt="logo" width={100} height={30} />
-            </HomeLink>
+            <Image src="/minTalk.png" alt="logo" width={100} height={30} />
           </Link>
-          <Headerbox>
-            <Menu>
-              <div>
-                <NavTxt href="/conSearch">상담사 목록</NavTxt>
-              </div>
-              <div>
-                <NavTxt href="/consultantsMypage">자가테스트</NavTxt>
-              </div>
-              <div>
-                <NavTxt href="/clientsConsultantPage">소통의 공간</NavTxt>
-              </div>
-            </Menu>
-            <LoginNav>
-              {isLogin ? (
-                <>
+        </HomeLink>
+        <Headerbox>
+          <Menu>
+            <div>
+              <NavTxt href="/conSearch">상담사 목록</NavTxt>
+            </div>
+            <div>
+              <NavTxt href="/consultantsMypage">자가테스트</NavTxt>
+            </div>
+            <div>
+              <NavTxt href="/clientsConsultantPage">소통의 공간</NavTxt>
+            </div>
+          </Menu>
+          <LoginNav>
+            {IsloggedIn ? (
+              <>
                 <Logout />
                 <Mypage />
-                </>
-              ) : (
-                <>
-                  <Login />
-                  <Signup />
-                </>
-              )}
-            </LoginNav>
-          </Headerbox>
-        </Head>
-        <Component {...pageProps} />
-        </RoleContext.Provider>
-      </LoginContext.Provider>
+              </>
+            ) : (
+              <>
+                <Login />
+                <Signup />
+              </>
+            )}
+          </LoginNav>
+        </Headerbox>
+      </Head>
+      <Component {...pageProps} />
     </>
   );
 }
@@ -80,7 +77,7 @@ const Headerbox = styled.div`
   justify-content: space-between;
   padding: 0rem 18rem 0rem 3rem;
 `;
-const Menu = styled.nav`
+const Menu = styled.div`
   & > div {
     list-style: none;
     float: left;
@@ -104,7 +101,7 @@ const NavTxt = styled(Link)`
   }
 `;
 
-const LoginNav = styled.nav`
+const LoginNav = styled.div`
   height: 3rem;
   display: flex;
   align-items: center;

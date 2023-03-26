@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, {useEffect, useState, useRef,  } from "react";
 import { FaStar, FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import { BsFillPinMapFill } from "react-icons/bs";
@@ -9,14 +9,13 @@ import Googlemaps from "@/components/Googlemaps";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { num } from "@/components/Consultant";
 import RateModal from "@/components/RateModal";
-import { RoleContext } from "@/components/LoginContext";
+
 
 export default function ClientsConsultantPage({}) {
   const homeRef = useRef<HTMLDivElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
   const reviewRef = useRef<HTMLDivElement>(null);
-  const Arraystar = [1, 2, 3, 4, 5];
   const onHomeClick = () => {
     homeRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -37,6 +36,8 @@ export default function ClientsConsultantPage({}) {
   const [location, setLocation] = useState("");
   const [allRate, setAllRate] = useState<number>(0);
   const [reivewModal, setReviewModal] = useState(false);
+  const [loginRole, setLoginRole] = useState("");
+  //내담자가 아니면 modal을 열 수 없게 적용
 
   const handleCloseModal = () => {
     setReviewModal(false);
@@ -44,18 +45,16 @@ export default function ClientsConsultantPage({}) {
   // 모달을 닫을 때 수행할 로직
   const handleOpenModal = () => {
     {
-      role === "CLIENT"
+      loginRole === "CLIENT"
         ? setReviewModal((prev) => !prev)
         : alert("내담자만 리뷰 등록이 가능합니다.");
     }
   };
   //모달 열 때 수행할 로직
-  const { role, setRole } = useContext(RoleContext);
-  //내담자가 아니면 modal을 열 수 없게 적용
 
   const calculateRate = () => {
     let sum = 0;
-    for (let i = 0; i < consultantReivews.length; i++) {
+    for (let i = 0; i < consultantReivews?.length; i++) {
       sum = sum + consultantReivews[i]["rate"];
       setAllRate(Math.round(sum / consultantReivews.length));
     }
@@ -71,7 +70,7 @@ export default function ClientsConsultantPage({}) {
     }).then((res) => res.json());
   };
   useEffect(() => {
-    const url = "https://mintalk.duckdns.org/sign-in/counselors";
+    const url = `https://mintalk.duckdns.org/sign-in/counselors/`;
 
     fetch(url, {
       method: "POST",
@@ -89,13 +88,12 @@ export default function ClientsConsultantPage({}) {
             setCareer(res?.data?.careers),
             setFields(res?.data?.fields),
             setLocation(res?.data?.location),
-            calculateRate()
+            setLoginRole(res?.userStatus?.role),
+            calculateRate(),[]
           );
         });
       });
   }, []);
-  console.log(typeof allRate);
-  console.log(allRate);
   return (
     <>
       <FindpsyPage ref={topRef}>
@@ -143,9 +141,9 @@ export default function ClientsConsultantPage({}) {
                 )}
               </StarBox>
               <ReviewBox>
-                <span>
-                  <span>Recent</span> 후기
-                </span>
+                <div className="littleTitle">
+                  Recent 후기
+                </div>
                 {consultantReivews?.length > 0 ? (
                   <div>{consultantReivews[0]["content"]}</div>
                 ) : (
@@ -216,7 +214,7 @@ export default function ClientsConsultantPage({}) {
                 </div>
                 병원 위치
               </CareerBoxHeader>
-              <span>{location}</span>
+              <div className="location">{location}</div>
               <HospitalImage>
                 <Googlemaps />
               </HospitalImage>
@@ -251,7 +249,7 @@ export default function ClientsConsultantPage({}) {
                   {consultantReivews?.map((Review) => {
                     return (
                       <>
-                        <UserBox>
+                        <UserBox key={Review["rate"]}>
                           <div>
                             <div>
                               <AiOutlineUser size={25} />
@@ -377,7 +375,7 @@ const HospitalBox = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  & > span {
+  .location{
     margin-top: 3rem;
     font-size: 1.1rem;
   }
@@ -487,14 +485,10 @@ const ReviewBox = styled.div`
   & > div {
     height: 2rem;
   }
-  & > span {
+  .littleTitle{
     height: 2rem;
   }
 
-  & > div > span {
-    color: #ff5151;
-    font-weight: 500;
-  }
 `;
 const FindpsyPage = styled.div`
   display: flex;

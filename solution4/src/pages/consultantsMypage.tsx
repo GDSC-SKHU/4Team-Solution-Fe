@@ -8,33 +8,45 @@ import { fieldList, careerlist } from "../constants";
 import PhotoUpload from "@/components/PhotoUpload";
 
 export default function ConsultantsMypage() {
-  const [consultant, setConsultant] = useState<any>({});
+  const [consultant, setConsultant] = useState<any>([]);
 
   //!상담사용 자기소개 조회
   const consultantsPage = () => {
     return fetch(`https://mintalk.duckdns.org/counselors/my-page`, {
       method: "GET",
       credentials: "include",
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setConsultant(res?.data);
+      });
   };
   useEffect(() => {
-    const url = "https://mintalk.duckdns.org/sign-in/counselors";
-    const data = {
-      email: "csrf@gmail.com",
-      password: "1234",
-    };
+    const url = "https://mintalk.duckdns.org/counselors/my-page";
 
+    const data = {
+      name: name,
+      email: email,
+      shortIntroduction: shortIntroduction,
+      introduction: introduction,
+      contact: contact,
+      location: location,
+      careers: [careers],
+      fields: [fields],
+    };
     fetch(url, {
       method: "POST",
-      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(data),
       credentials: "include",
     })
       .catch((error) => console.error("Error:", error))
       .finally(() => {
-        consultantsPage().then((res) => setConsultant(res.data));
+        consultantsPage().then((res) => {
+          console.log(res);
+        });
       });
   }, []);
 
@@ -48,67 +60,163 @@ export default function ConsultantsMypage() {
   const [location, setLocation] = useState<string>("");
   const [careers, setCareers] = useState([]);
   const [fields, setFields] = useState([]);
-  const [Files, setFiles] = useState('');
+  const [Files, setFiles] = useState("");
 
-  const onLoadFile = (e:any)=>{
+  const onLoadFile = (e: any) => {
     const file = e.target.files;
     setFiles(file);
     console.log(file);
-  }
+  };
 
   return (
-    <ConMypageMain>
-      <Title>상담자용 마이페이지</Title>
-      <ConsultantImgBox>
-        <div>
-          <Image
-            alt="consultantImg"
-            src={consultant?.profileImageUrl}
-            width={300}
-            height={300}
-          />
-          <input type="file" id="파일 선택 하는 버튼" onChange={onLoadFile} />
-        </div>
-        <form>
+    <form>
+      <ConMypageMain>
+        <Title>상담자용 마이페이지</Title>
+        <ConsultantImgBox>
           <div>
-            <p>이름</p>
-            <input></input>
+            <PhotoUpload onFileChange={(file) => console.log(file)} />
+            {/* //onFileChange 속성이 Props 인터페이스에서 필수가 아닌 optional 속성으로 변경되거나, PhotoUpload 컴포넌트 호출 시 onFileChange 속성이 전달되어 오류가 발생하지 않게 됩니다. */}
+          </div>
+          <FixSimpleIntro>
+            <div>
+              <p>이름</p>
+              <input className="InputBox"></input>
+            </div>
+            <div>
+              <p>이메일</p>
+              <input className="InputBox"></input>
+            </div>
+            <div>
+              <p>연락처</p>
+              <input className="InputBox"></input>
+            </div>
+            <div>
+              <p>근무지</p>
+              <input className="InputBox"></input>
+            </div>
+          </FixSimpleIntro>
+        </ConsultantImgBox>
+        <IntoBox>
+          <div>
+            <p>한줄로 자신을 소개해주세요 </p>
+            <textarea
+              cols={90}
+              rows={2}
+              placeholder="한줄로 자신의 소개를 입력해주세요..."
+              className="IntroBox1"
+            ></textarea>
           </div>
           <div>
-            <p>이메일</p>
-            <input></input>
+            <p>긴 자기 소개서</p>
+            <textarea
+              cols={90}
+              rows={20}
+              placeholder="자신의 소개를 입력해주세요..."
+              className="IntroBox2"
+            ></textarea>
           </div>
           <div>
-            <p>연락처</p>
-            <input></input>
+            <p>직업</p>
+            <div className="Box">
+              <input className="Job"></input>
+              <PlusBtn>+</PlusBtn>
+            </div>
           </div>
-          <div>
-            <p>근무지</p>
-            <input></input>
+          <div className="Box">
+            <p>경력</p>
+            <div>
+              <input className="Career"></input>
+              <PlusBtn>+</PlusBtn>
+            </div>
           </div>
-        </form>
-      </ConsultantImgBox>
-      <div>
-        <p>한줄로 자신을 소개해주세요 </p>
-        <input></input>
-      </div>
-      <div>
-        <p>긴 자기 소개서</p>
-        <input></input>
-      </div>
-      <div>
-        <p>직업</p>
-        <input></input>
-      </div>
-      <div>
-        <p>경력</p>
-        <input></input>
-      </div>
-      <PhotoUpload />
-    </ConMypageMain>
+        </IntoBox>
+      </ConMypageMain>
+    </form>
   );
 }
+const PlusBtn = styled.button`
+  width: 3rem;
+  height: 2rem;
+`;
+const IntoBox = styled.div`
+  .Box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
+  & > div {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    & > p {
+      margin: 1.5rem;
+      font-size: 1.2rem;
+    }
+  }
+  .Job {
+    width: 20rem;
+    padding: 0px 1rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+  }
+  .Career {
+    width: 20rem;
+    padding: 0px 1rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+  }
+  display: flex;
+  flex-direction: column;
+  background-color: #21dd0043;
+  .IntroBox1 {
+    padding: 0.5rem;
+    margin: 1rem;
+    font-size: 1.2rem;
+    overflow: scroll;
+    outline: none;
+    border: none;
+  }
+  .IntroBox2 {
+    padding: 0.5rem;
+    margin: 1rem;
+    font-size: 1.2rem;
+    overflow: scroll;
+    outline: none;
+    border: none;
+  }
+`;
+const FixSimpleIntro = styled.div`
+  display: flex;
+  font-size: 1.3rem;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  align-items: flex-end;
+  & > div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .InputBox {
+    margin: 0.5rem;
+    font-size: 1.5rem;
+    width: 20rem;
+    height: 3rem;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background-color: #3acc00a4;
+    font-size: 1.1rem;
+    padding: 0px 10px;
+    &:focus {
+      background-color: #2c9a00a3;
+      transition: all 1s;
+    }
+  }
+`;
 const ConsultantImgBox = styled.div`
   display: flex;
   margin: 1rem;
@@ -123,35 +231,8 @@ const ConsultantImgBox = styled.div`
       height: 2rem;
     }
   }
-  & > form {
-    margin-left: 10%;
-    /* background-color: #dcdcdc; */
-    width: 40%;
-    padding: 1rem 3rem;
-    border-radius: 15px;
-    & > div {
-      margin: 1rem;
-      & > p {
-        font-size: 1.2rem;
-        margin: 5px 0px;
-      }
-      & > input {
-        width: 80%;
-        height: 2rem;
-        border-radius: 6px;
-        outline: none;
-        border: none;
-        padding: 5px 1rem;
-        background-color: #9fde6f;
-        &:focus {
-          background-color: #6b954a;
-          color: white;
-          transition: all 0.5s;
-        }
-      }
-    }
-  }
 `;
+
 const Title = styled.p`
   font-size: 1.5em;
   margin: 1rem;

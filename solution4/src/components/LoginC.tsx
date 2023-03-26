@@ -1,9 +1,10 @@
 // import axios from "axios";
 // import { METHODS } from "http";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useState } from "react";
 import styled from "styled-components";
-import LoginContext, { RoleContext } from "./LoginContext";
+
 // import Checkbox from "./Checkbox";
 
 export default function LoginC() {
@@ -12,38 +13,29 @@ export default function LoginC() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { isLogin, setIsLogin } = useContext(LoginContext);
-  //로그인 성공 여부
-  const { role, setRole } = useContext(RoleContext);
-
   const data = { email: username, password: password };
+
   const onFinish = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     fetch("https://mintalk.duckdns.org/sign-in/counselors", {
-      method: "POST", // no-cors, *cors, same-origin //메소드 지정
-      // mode: 'no-cors',
+      method: "POST",
       headers: {
-        //데이터 타입 지정
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-      //실제 데이터 파싱하여 body에 저장
-      credentials: `include`,
+      credentials: "include",
     })
-      .then((res) => res.json()) //이것이 필요한 것인가?
+      .then((res) => res.json())
       .then((res) => {
-        setRole(res.userStatus["role"]);
-        setIsLogin(true);
+        Cookies.set("role", res.userStatus["role"]);
+        Cookies.set("loggedIn", res.userStatus["loggedIn"]);
         router.push("/");
       })
       .catch((error) => {
-        setIsLogin(false);
+        alert("로그인에 실패하였습니다.");
       });
   };
-
-  console.log(role);
-  console.log(isLogin);
 
   return (
     <LoginBoxC onSubmit={onFinish}>
