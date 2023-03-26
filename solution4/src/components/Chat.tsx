@@ -61,7 +61,7 @@ const Who = styled.div`
   margin-top: 2vh;
 
   height: 4vh;
-  
+
   color: green;
 
   font-size: 2em;
@@ -124,6 +124,11 @@ const SubmitInput = styled.input`
 
   text-align: right;
   font-size: 1em;
+
+  &:focus {
+    outline: none;
+    border: none;
+  }
 `;
 
 const Submit = styled.button`
@@ -134,7 +139,7 @@ const Submit = styled.button`
 
   background-color: yellow;
   color: green;
-  
+
   border: none;
   border-radius: 15px;
 
