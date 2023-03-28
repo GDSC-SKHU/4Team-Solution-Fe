@@ -84,7 +84,7 @@ export default function SignupC() {
             type="text"
             value={email}
             onChange={onChangeEmail}
-            placeholder={" ex) 1234@gmail.com"}
+            placeholder={" 이메일"}
           ></StyledInput>
         </div>
 
@@ -94,7 +94,7 @@ export default function SignupC() {
             type="password"
             value={password}
             onChange={onChangePassword}
-            placeholder={" password"}
+            placeholder={" 4자 이상 20자 이하"}
           ></StyledInput>
         </div>
 

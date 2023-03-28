@@ -81,7 +81,7 @@ export default function SignupC() {
             type="text"
             value={email}
             onChange={onChangeEmail}
-            placeholder={" ex) 1234@gmail.com"}
+            placeholder={" 이메일"}
           ></StyledInput>
         </div>
 
