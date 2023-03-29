@@ -1,7 +1,10 @@
 # Introducing Mintalk.
 Mintalk was created to alleviate mental pain and suffering.
 
-### The features of Mintalk include
+### Backend Github
+https://github.com/GDSC-SKHU/2023-Solution_Challenge-Team4-Backend
+
+## The features of Mintalk include
 - Self-psychological tests
 - Real-time chat with counselors
 - Matching with psychiatrists.
