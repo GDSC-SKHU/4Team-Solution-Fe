@@ -24,7 +24,7 @@ I believe that if we can develop self-tests with an element of fun and allow use
 <img width="1600" alt="스크린샷 2023-03-28 오후 2 34 39" src="https://user-images.githubusercontent.com/104067367/228138227-0a618466-870b-426f-8195-b26406d4369e.png">
 </p>
 
-### 4. tree
+### 4. source tree
 
 ```bash
 .
