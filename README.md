@@ -32,7 +32,37 @@ I believe that if we can develop self-tests with an element of fun and allow use
 
 </p>
 
-### 4. source tree
+## 4. How to use the features
+### Sing up and login instructions
+Sign up according to your role.
+
+If you want to receive counseling, sign up as a **client**.
+
+If you are qualified to provide psychological assistance to clients, sign up as a **counselor**.
+
+### Usage instrunctions (after logging in)
+*Client*
+  
+1. Click the list of counselors on the header bar.
+
+2. Select gender and field of the counselor to search.
+
+3. Click on the counselor that matches your search criteria to see their detailed information (education, experience, hospital location).
+
+4. After reviewing the detailed information, you can chat with the appropriate counselor.
+
+5. Leave a review after counseling on the counselor's detailed information page (not mandatory).
+
+*Counselor*
+
+1. Your basic information will be registered on the list of counselors when you sign up.
+
+2. Use the "My Page" section on the header bar to fill in your detailed information. Your information will be updated on your counselor profile page once you complete the form.
+  
+
+
+
+### 5. source tree
 
 ```bash
 .
@@ -72,3 +102,9 @@ I believe that if we can develop self-tests with an element of fun and allow use
     └── globals.css
 
 ```
+
+### 6. Here are the upcoming features that Mintalk plans to implement
+
+- Self-psychological tests (in progress)
+- Real-time chat with counselors (in progress)
+- Matching with psychiatrists.
