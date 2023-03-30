@@ -4,35 +4,48 @@ import Link from "next/link";
 import styled from "styled-components";
 import Image from "next/image";
 import Login from "../components/Login";
-import Signup from "../components/Signup"
+import Signup from "../components/Signup";
+import React from "react";
+import Logout from "@/components/Logout";
+import Mypage from "@/components/Mypage";
+import Cookies from "js-cookie";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const Isrole = Cookies.get("role");
+  const IsloggedIn = Cookies.get("loggedIn");
+
   return (
     <>
       <Head>
-        <Link href="/">
-          <HomeLink>
+        <HomeLink>
+          <Link href="/">
             <Image src="/minTalk.png" alt="logo" width={100} height={30} />
-          </HomeLink>
-        </Link>
+          </Link>
+        </HomeLink>
         <Headerbox>
           <Menu>
             <div>
-              <NavTxt href="/conSearch">상담 찾기</NavTxt>
+              <NavTxt href="/conSearch">상담사 목록</NavTxt>
             </div>
             <div>
-              <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>
+              <NavTxt href="/consultantsMypage">자가테스트</NavTxt>
             </div>
             <div>
-              <NavTxt href="/clientsConsultantPage">상담실 위치</NavTxt>
-            </div>
-            <div>
-              <NavTxt href="/consultantsMypage">상담실 위치</NavTxt>
+              <NavTxt href="/clientsConsultantPage">소통의 공간</NavTxt>
             </div>
           </Menu>
           <LoginNav>
-            <Login />
-            <Signup />
+            {IsloggedIn ? (
+              <>
+                <Logout />
+                <Mypage />
+              </>
+            ) : (
+              <>
+                <Login />
+                <Signup />
+              </>
+            )}
           </LoginNav>
         </Headerbox>
       </Head>
@@ -64,7 +77,7 @@ const Headerbox = styled.div`
   justify-content: space-between;
   padding: 0rem 18rem 0rem 3rem;
 `;
-const Menu = styled.nav`
+const Menu = styled.div`
   & > div {
     list-style: none;
     float: left;
@@ -88,7 +101,7 @@ const NavTxt = styled(Link)`
   }
 `;
 
-const LoginNav = styled.nav`
+const LoginNav = styled.div`
   height: 3rem;
   display: flex;
   align-items: center;

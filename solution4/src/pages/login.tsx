@@ -9,7 +9,7 @@ export default function Login() {
   const selectMember = (type: string) => {
     setMemberType(type);
   };
-
+  
   return (
     <Container>
       <Option>

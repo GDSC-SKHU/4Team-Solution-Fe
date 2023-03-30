@@ -14,8 +14,10 @@ export default function SignupC() {
   const onChangeName = (e: ChangeEvent<HTMLInputElement>) =>
     setName(e.target.value);
 
-  const onChangeGender = (e: ChangeEvent<HTMLInputElement>) =>
+  const onChangeGender = (e: ChangeEvent<HTMLInputElement>) => {
     setGender(e.target.value);
+  };
+
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
 
@@ -24,7 +26,6 @@ export default function SignupC() {
 
   const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     axios
       .post(
         "https://mintalk.duckdns.org/counselors",
@@ -40,8 +41,15 @@ export default function SignupC() {
         router.push("/login");
       })
       .catch((error) => {
-        console.log(error);
+        if (error.response.status === 400) {
+          alert("비밀번호는 4~20자 사이어야 합니다, Email 형식이어야 합니다.");
+        } else if (error.response.status === 409) {
+          alert("이미 존재하는 상담사 이메일입니다.");
+        }
       });
+    if (gender !== "female" && gender !== "male") {
+      alert("성별은 male 혹은 female로 입력하십시오.");
+    }
   };
   return (
     <Container>
@@ -73,7 +81,7 @@ export default function SignupC() {
             type="text"
             value={email}
             onChange={onChangeEmail}
-            placeholder={" ex) 1234@gmail.com"}
+            placeholder={" 이메일"}
           ></StyledInput>
         </div>
 
@@ -92,6 +100,7 @@ export default function SignupC() {
     </Container>
   );
 }
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -143,7 +152,7 @@ const Summit = styled.button`
 
   border-radius: 5rem;
 
-  background:white;
+  background: white;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;

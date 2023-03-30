@@ -20,26 +20,30 @@ import {
   ZoomIn,
   ZoomOut,
 } from "react-scroll-motion";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 export default function Home() {
   // const animatedItem = useScrollFadeIn();
   const [topReviews, setTopReviews] = useState([]);
 
-  const postReview = () => {
-    let num = 1;
-    return fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
+  const postReview = async () => {
+    let num = 7;
+    const res = await fetch(`https://mintalk.duckdns.org/counselors/${num}`, {
       method: "GET",
       mode: "cors",
       cache: "default",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        return res.data;
-      });
+    });
+    const data = await res.json();
+    return data.data;
   };
+
   useEffect(() => {
-    postReview().then((res) => setTopReviews(res.reviews.slice(0, 4)));
-  });
+    const fetchData = async () => {
+      const reviews = await postReview();
+      setTopReviews(reviews.reviews.slice(0, 3));
+    };
+    fetchData();
+  }, []);
 
   // console.log('?',topReviews);
   //! 이게 6번이나 찍히는 이유는 랜더링을 할때마다 실행하기 때문인데 이 횟수가 많아질 수록 불리하다.
@@ -50,9 +54,16 @@ export default function Home() {
       <MainBox>
         <ServicePosterBox>
           <Poster>
+                <Player
+                  autoplay
+                  loop
+                  speed={0.9}
+                  src="https://assets6.lottiefiles.com/packages/lf20_vmdlqsp1.json"
+                  style={{ height: "20rem", width: "30rem" }}
+                />
             <div>
               <PostTextBox>
-                <span>from minTalk</span>
+                <div className="From">from minTalk</div>
                 <p>당신의 스트레스는 괜찮은 상태인가요..?</p>
                 <div>How about measuring your stress?</div>
               </PostTextBox>
@@ -85,7 +96,7 @@ export default function Home() {
           </IntrosubBox>
         </IntroduceBox>
         <ServiceBox>
-          <span>Site Review</span>
+          <div className="siteReview">Site Review</div>
           <div>
             {topReviews.map((reviewlist) => {
               return (
@@ -157,7 +168,7 @@ const PostTextBox = styled.div`
     font-size: 3rem;
     font-weight: 600;
   }
-  & > span {
+  .From{
     font-size: 1.2rem;
     font-weight: 600;
   }
@@ -166,8 +177,8 @@ const PostTextBox = styled.div`
   }
 `;
 const TestBtn = styled.button`
-  width: 16rem;
-  height: 7rem;
+  width: 27rem;
+  height: 5rem;
   padding: 10px;
   font-size: 1.3rem;
   background-color: #48c400;
@@ -191,8 +202,8 @@ const ServiceBox = styled.div`
   align-items: center;
   width: 100%;
   padding-bottom: 3rem;
-  background-color: #e4ffd2;
-  & > span {
+  background-color: #e4ffeb;
+  .siteReview{
     font-size: 2rem;
     font-family: "Courier New", Courier, monospace;
     margin: 3rem;
@@ -236,12 +247,13 @@ const Anony = styled.div`
 const ListBox = styled.span`
   display: flex;
   margin: 2rem 1rem;
+  padding: 13px;
   width: 90%;
   height: 100%;
   justify-content: center;
   align-items: center;
   background-color: #2ecf347a;
-  border-radius: 10px;
+
   & > div {
     font-size: 1.2rem;
   }
@@ -264,24 +276,24 @@ const IntroduceBox = styled.div`
 `;
 
 const Poster = styled.div`
-  width: 100%;
+  width: 60%;
   margin: auto;
   height: 45rem;
   display: flex;
-  color: white;
+  padding-top: 3rem;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-image: url("/stressguy.jpeg");
+
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
-  &>div{
+  & > div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 10%;
+
   }
 `;
 const ServicePosterBox = styled.div`
@@ -298,4 +310,5 @@ const MainBox = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background-color: #e4ffeb;
 `;

@@ -1,8 +1,10 @@
 // import axios from "axios";
 // import { METHODS } from "http";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import styled from "styled-components";
+
 // import Checkbox from "./Checkbox";
 
 export default function LoginC() {
@@ -12,32 +14,40 @@ export default function LoginC() {
   const [password, setPassword] = useState<string>("");
 
   const data = { email: username, password: password };
+
   const onFinish = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     fetch("https://mintalk.duckdns.org/sign-in/counselors", {
-      method: "POST", // no-cors, *cors, same-origin //메소드 지정
-      // mode: 'no-cors',
+      method: "POST",
       headers: {
-        //데이터 타입 지정
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-      //실제 데이터 파싱하여 body에 저장
-      credentials: `include`,
+      credentials: "include",
     })
-      // .then((res) => res.json()) //이것이 필요한 것인가?
-      //
-      // .then((res) => {
-      //   console.log(res);
-      //   router.push("/");
-      // })
       .then((res) => {
-        res;
+        if (res.status === 400) {
+          throw new Error("email과 password가 일치하지 않습니다");
+        } else if (res.status === 404) {
+          throw new Error("해당 email로 상담사를 찾을 수 없습니다.");
+        } else {
+          return res.json();
+        }
+      })
+      .then((res) => {
+        if (res.userStatus && res.userStatus["role"]) {
+          Cookies.set("role", res.userStatus["role"]);
+        }
+        if (res.userStatus && res.userStatus["loggedIn"]) {
+          Cookies.set("loggedIn", res.userStatus["loggedIn"]);
+        }
         router.push("/");
       })
       .catch((error) => {
         console.log(error);
+        // alert("로그인에 실패하였습니다.");
+        alert(error.message);
       });
   };
 
@@ -54,6 +64,7 @@ export default function LoginC() {
         ></EmailBox>
         <p>비밀번호</p>
         <PasswordBox
+          type="password"
           placeholder="password"
           onChange={(e) => {
             setPassword(e.target.value);
@@ -77,14 +88,14 @@ const LoginBoxC = styled.form`
 `;
 
 const MemberType = styled.p`
- padding-right: 12rem;
- padding-bottom: 2rem;
+  padding-right: 12rem;
+  padding-bottom: 2rem;
 
- font-size: 2rem;
- font-weight: 600;
- 
- color: gray;
-`
+  font-size: 2rem;
+  font-weight: 600;
+
+  color: gray;
+`;
 
 const InputBox = styled.div`
   display: grid;
@@ -93,7 +104,6 @@ const InputBox = styled.div`
 
   gap: 1rem;
 `;
-
 
 const EmailBox = styled.input`
   width: 12rem;
