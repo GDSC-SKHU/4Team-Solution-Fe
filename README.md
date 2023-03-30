@@ -1,4 +1,4 @@
-# Introducing Mintalk.
+# Introducing Mintalk. (http://mintalk.site/)
 Mintalk was created to alleviate mental pain and suffering.
 
 ### Backend Github
